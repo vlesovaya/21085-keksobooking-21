@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
-* Студент: [Valentina Lesovaya](https://up.htmlacademy.ru/javascript/21/user/21085).
-* Наставник: `Неизвестно`.
+* Студент: [Valentina Lesovaya](https://up.htmlacademy.ru/javascript/21/user/21085)
+* Наставник: [Ирина Захарова](https://htmlacademy.ru/profile/id462703)
 
 ---
 
