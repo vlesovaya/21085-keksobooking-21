@@ -1,8 +1,7 @@
 'use strict';
 
-
-function mockData() {
-  const advertisments = [
+const mockDate = function () {
+  const advertisements = [
     {
       author: {
         avatar: `img/avatars/user01.png`,
@@ -181,8 +180,9 @@ function mockData() {
       },
     },
   ];
-  return advertisments;
-}
+  return advertisements;
+};
+mockDate();
 
 const map = document.querySelector('.map');
 map.classList.remove(`map--faded`);
