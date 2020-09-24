@@ -1,188 +1,44 @@
 'use strict';
 
-const mockDate = function () {
-  const advertisements = [
-    {
-      author: {
-        avatar: `img/avatars/user01.png`,
-      },
-      offer: {
-        title: `title 1`,
-        address: `600, 350`,
-        price: 100,
-        type: `palace`,
-        rooms: 2,
-        guests: 100,
-        checkin: `14:00`,
-        checkout: `14:00`,
-        features: [`wifi`, `dishwasher`, `washer`, `elevator`, `conditioner`],
-        description: `description 1`,
-        photos: [`http://o0.github.io/assets/images/tokyo/hotel1.jpg`, `http://o0.github.io/assets/images/tokyo/hotel2.jpg`, `http://o0.github.io/assets/images/tokyo/hotel3.jpg`],
-      },
-      location: {
-        x: 170,
-        y: 600,
-      },
-    },
-    {
-      author: {
-        avatar: `img/avatars/user02.png`,
-      },
-      offer: {
-        title: `title 2`,
-        address: `600, 350`,
-        price: 200,
-        type: `flat`,
-        rooms: 2,
-        guests: 4,
-        checkin: `12:00`,
-        checkout: `12:00`,
-        features: [`wifi`, `dishwasher`, `parking`, `washer`, `elevator`, `conditioner`],
-        description: `description 2`,
-        photos: [`http://o0.github.io/assets/images/tokyo/hotel1.jpg`, `http://o0.github.io/assets/images/tokyo/hotel2.jpg`, `http://o0.github.io/assets/images/tokyo/hotel3.jpg`],
-      },
-      location: {
-        x: 280,
-        y: 550,
-      },
-    },
-    {
-      author: {
-        avatar: `img/avatars/user03.png`,
-      },
-      offer: {
-        title: `title 3`,
-        address: `600, 350`,
-        price: 350,
-        type: `house`,
-        rooms: 3,
-        guests: 8,
-        checkin: `12:00`,
-        checkout: `13:00`,
-        features: [`wifi`, `dishwasher`, `parking`, `washer`, `elevator`, `conditioner`],
-        description: `description 3`,
-        photos: [`http://o0.github.io/assets/images/tokyo/hotel1.jpg`, `http://o0.github.io/assets/images/tokyo/hotel2.jpg`, `http://o0.github.io/assets/images/tokyo/hotel3.jpg`],
-      },
-      location: {
-        x: 376,
-        y: 280,
-      },
-    },
-    {
-      author: {
-        avatar: `img/avatars/user04.png`,
-      },
-      offer: {
-        title: `title 4`,
-        address: `600, 350`,
-        price: 150,
-        type: `bungalow`,
-        rooms: 1,
-        guests: 2,
-        checkin: `14:00`,
-        checkout: `12:00`,
-        features: [`wifi`, `dishwasher`, `washer`, `elevator`, `conditioner`],
-        description: `description 4`,
-        photos: [`http://o0.github.io/assets/images/tokyo/hotel1.jpg`, `http://o0.github.io/assets/images/tokyo/hotel2.jpg`, `http://o0.github.io/assets/images/tokyo/hotel3.jpg`],
-      },
-      location: {
-        x: 198,
-        y: 356,
-      },
-    },
-    {
-      author: {
-        avatar: `img/avatars/user05.png`,
-      },
-      offer: {
-        title: `title 5`,
-        address: `600, 350`,
-        price: 175,
-        type: `palace`,
-        rooms: 1,
-        guests: 2,
-        checkin: `14:00`,
-        checkout: `13:00`,
-        features: [`wifi`, `parking`, `washer`, `elevator`, `conditioner`],
-        description: `description 5`,
-        photos: [`http://o0.github.io/assets/images/tokyo/hotel1.jpg`, `http://o0.github.io/assets/images/tokyo/hotel2.jpg`, `http://o0.github.io/assets/images/tokyo/hotel3.jpg`],
-      },
-      location: {
-        x: 448,
-        y: 365,
-      },
-    },
-    {
-      author: {
-        avatar: `img/avatars/user06.png`,
-      },
-      offer: {
-        title: `title 6`,
-        address: `600, 350`,
-        price: 210,
-        type: `flat`,
-        rooms: 1,
-        guests: 4,
-        checkin: `14:00`,
-        checkout: `12:00`,
-        features: [`wifi`, `dishwasher`, `parking`, `washer`, `elevator`, `conditioner`],
-        description: `description 6`,
-        photos: [`http://o0.github.io/assets/images/tokyo/hotel1.jpg`, `http://o0.github.io/assets/images/tokyo/hotel2.jpg`, `http://o0.github.io/assets/images/tokyo/hotel3.jpg`],
-      },
-      location: {
-        x: 470,
-        y: 415,
-      },
-    },
-    {
-      author: {
-        avatar: `img/avatars/user07.png`,
-      },
-      offer: {
-        title: `title 7`,
-        address: `600, 350`,
-        price: 300,
-        type: `house`,
-        rooms: 3,
-        guests: 6,
+function getRandomInteger(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
 
-        checkin: `12:00`,
-        checkout: `14:00`,
-        features: [`wifi`, `dishwasher`, `parking`, `washer`, `elevator`, `conditioner`],
-        description: `description 7`,
-        photos: [`http://o0.github.io/assets/images/tokyo/hotel1.jpg`, `http://o0.github.io/assets/images/tokyo/hotel2.jpg`, `http://o0.github.io/assets/images/tokyo/hotel3.jpg`],
-      },
-      location: {
-        x: 300,
-        y: 510,
-      },
-    },
-    {
+function getMockAds() {
+  let ads = [];
+  for (let i = 1; i <= 8; i++) {
+    const checkinArr = ['12:00', '13:00', '14:00'];
+    const typeArr = ['palace', 'flat', 'house', 'bungalow'];
+    const apartFeatures = ["wifi", "dishwasher", "parking", "washer", "elevator", "conditioner"];
+    const apartPhotos = ["http://o0.github.io/assets/images/tokyo/hotel1.jpg", "http://o0.github.io/assets/images/tokyo/hotel2.jpg", "http://o0.github.io/assets/images/tokyo/hotel3.jpg"];
+
+    const ad = {
       author: {
-        avatar: `img/avatars/user08.png`,
+        avatar: 'img/avatars/user0' + i + '.png',
       },
       offer: {
-        title: `title 8`,
-        address: `600, 350`,
-        price: 280,
-        type: `bungalow`,
-        rooms: 3,
-        guests: 6,
-        checkin: `12:00`,
-        checkout: `14:00`,
-        features: [`wifi`, `dishwasher`, `parking`, `washer`, `elevator`, `conditioner`],
-        description: `description 8`,
-        photos: [`http://o0.github.io/assets/images/tokyo/hotel1.jpg`, `http://o0.github.io/assets/images/tokyo/hotel2.jpg`, `http://o0.github.io/assets/images/tokyo/hotel3.jpg`],
+        title: 'name ' + i,
+        address: getRandomInteger(0, 600) + ', ' + getRandomInteger(0, 600),
+        price: getRandomInteger(0, 5000),
+        type: typeArr[getRandomInteger(0, typeArr.length)],
+        rooms: getRandomInteger(0, 4),
+        guests: getRandomInteger(0, 4),
+        checkin: checkinArr[getRandomInteger(0, checkinArr.length)],
+        features: apartFeatures.slice(0, getRandomInteger(1, apartFeatures.length)),
+        description: 'description ' + i,
+        photos: apartPhotos.slice(0, getRandomInteger(1, apartPhotos.length)),
       },
       location: {
-        x: 215,
-        y: 360,
+        x: getRandomInteger(0, 1200),
+        y: getRandomInteger(130, 630),
       },
-    },
-  ];
-  return advertisements;
-};
-mockDate();
+    };
+    ads.push(ad);
+  }
+  return ads;
+}
 
-const map = document.querySelector('.map');
+const map = document.querySelector(`.map`);
 map.classList.remove(`map--faded`);
+
+
