@@ -46,8 +46,10 @@ function removeFaded(mapElement) {
 
 function addPin(pinData, template, mapElement) {
   const pin = template.cloneNode(true);
-  pin.style.left = pinData.location.x + pin.style.width / 2 + 'px';
-  pin.style.top = pinData.location.y - pin.style.height / 2 + 'px';
+  const PIN_WIDTH = 40;
+  const PIN_HEIGHT = 40;
+  pin.style.left = pinData.location.x + PIN_WIDTH / 2 + 'px';
+  pin.style.top = pinData.location.y - PIN_HEIGHT / 2 + 'px';
   pin.querySelector(`img`).src = pinData.author.avatar;
   pin.querySelector(`img`).alt = pinData.offer.title;
   mapElement.appendChild(pin);
