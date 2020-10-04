@@ -73,8 +73,8 @@ function addPins(mapElement) {
 }
 
 const map = document.querySelector(`.map`);
-removeFaded(map);
-addPins(map);
+// removeFaded(map);
+// addPins(map);
 
 // Часть 2
 
@@ -137,3 +137,20 @@ function verifyAndAddTextData(card, selector, data, dataMap) {
 }
 
 addCards(map);
+// Задание 10
+
+// function disableField() {
+//   document.querySelector('.ad-form').disabled = true;
+// }
+
+// Активность карты по щелчку мыши (нужен еще счелчок только правой кнопкой)
+
+const setupActive = document.querySelector('.map__pin--main');
+setupActive.addEventListener('mousedown', function () {
+  removeFaded(map);
+});
+document.addEventListener('mousedown', function (evt) {
+  if (evt.keyCode === 0) {
+    removeFaded(map);
+  }
+});
