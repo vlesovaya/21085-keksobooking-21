@@ -151,5 +151,10 @@ function setupActiveClick() {
       removeFaded(map);
     }
   });
+  document.addEventListener('keydown', function (evt) {
+    if (evt.key === 'Enter') {
+      removeFaded(map);
+    }
+  });
 }
 setupActiveClick();
