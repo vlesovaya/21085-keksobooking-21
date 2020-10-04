@@ -136,7 +136,7 @@ function verifyAndAddTextData(card, selector, data, dataMap) {
   }
 }
 
-addCards(map);
+// addCards(map);
 // Задание 10
 
 // function disableField() {
@@ -144,13 +144,12 @@ addCards(map);
 // }
 
 // Активность карты по щелчку мыши (нужен еще счелчок только правой кнопкой)
-
-const setupActive = document.querySelector('.map__pin--main');
-setupActive.addEventListener('mousedown', function () {
-  removeFaded(map);
-});
-document.addEventListener('mousedown', function (evt) {
-  if (evt.keyCode === 0) {
-    removeFaded(map);
-  }
-});
+function setupActiveClick() {
+  const mapPin = document.querySelector('.map__pin--main');
+  mapPin.addEventListener('mousedown', function (evt) {
+    if (evt.button === 0) {
+      removeFaded(map);
+    }
+  });
+}
+setupActiveClick();
