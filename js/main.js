@@ -89,15 +89,30 @@ function addCards(mapElement) {
 // Создает карточку и заполняет данными
 function addCard(cardDate, template, mapElement) {
   const card = template.cloneNode(true);
-  card.querySelector('.popup__title').textContent = cardDate.offer.title;
-  card.querySelector('.popup__text--address').textContent = cardDate.offer.address;
-  card.querySelector('.popup__text--price').textContent = cardDate.offer.price + '₽/ночь';
-
-  card.querySelector('.popup__text--capacity').textContent = cardDate.offer.rooms + ' комнаты для ' + cardDate.offer.guests + ' гостей';
-  card.querySelector('.popup__type').textContent = localizeType(cardDate.offer.type);
-  card.querySelector('.popup__text--time').textContent = 'Заезд после ' + cardDate.offer.checkin + ' выезд до ' + cardDate.offer.checkout;
-  card.querySelector('.popup__features').textContent = cardDate.offer.features.join(", ");
-  card.querySelector('.popup__description').textContent = cardDate.offer.description;
+  verifyAndAddTextData(card, '.popup__title', cardDate.offer.title, function () {
+    return cardDate.offer.title;
+  });
+  verifyAndAddTextData(card, '.popup__text--address', cardDate.offer.address, function () {
+    return cardDate.offer.address;
+  });
+  verifyAndAddTextData(card, '.popup__text--price', cardDate.offer.price, function () {
+    return cardDate.offer.price + '₽/ночь';
+  });
+  verifyAndAddTextData(card, '.popup__type', cardDate.offer.type, function () {
+    return localizeType(cardDate.offer.type);
+  });
+  verifyAndAddTextData(card, '.popup__text--capacity', cardDate.offer.rooms, function () {
+    return cardDate.offer.rooms + ' комнаты для ' + cardDate.offer.guests + ' гостей';
+  });
+  verifyAndAddTextData(card, '.popup__text--time', cardDate.offer.checkin, function () {
+    return 'Заезд после ' + cardDate.offer.checkin + ' выезд до ' + cardDate.offer.checkout;
+  });
+  verifyAndAddTextData(card, '.popup__features', cardDate.offer.features, function () {
+    return cardDate.offer.features.join(", ");
+  });
+  verifyAndAddTextData(card, '.popup__description', cardDate.offer.description, function () {
+    return cardDate.offer.description;
+  });
 
   let photoElement = card.querySelector('.popup__photos').querySelector('.popup__photo');
   card.querySelector('.popup__photos').removeChild(photoElement);
@@ -113,9 +128,12 @@ function addCard(cardDate, template, mapElement) {
 }
 
 // Скрывает элемент без данных
-window.onload = function () {
-  if (document.getElementsByClassName('')[0].textContent === "") {
-    document.classList.add('hidden');
+function verifyAndAddTextData(card, selector, data, dataMap) {
+  if (data !== null) {
+    card.querySelector(selector).textContent = dataMap();
+  } else {
+    card.querySelector(selector).hidden = true;
   }
-};
+}
+
 addCards(map);
