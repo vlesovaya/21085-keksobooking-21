@@ -83,7 +83,14 @@ function addCard(cardDate, template, mapElement) {
   card.querySelector('.popup__title').textContent = cardDate.offer.title;
   card.querySelector('.popup__text--address').textContent = cardDate.offer.address;
   card.querySelector('.popup__text--price').textContent = cardDate.offer.price + '₽/ночь';
-  card.querySelector('.popup__type').textContent = cardDate.offer.type;
+
+  const sayings = new Map();
+  sayings.set('flat', 'Квартира');
+  sayings.set('bungalow', 'Бунгало');
+  sayings.set('house', 'Дом');
+  sayings.set('palace', 'Дворец');
+  card.querySelector('.popup__type').textContent = sayings.get(cardDate.offer.type);
+
   card.querySelector('.popup__text--capacity').textContent = cardDate.offer.rooms + ' комнаты для ' + cardDate.offer.guests + ' гостей';
   card.querySelector('.popup__text--time').textContent = 'Заезд после ' + cardDate.offer.checkin + ' выезд до ' + cardDate.offer.checkout;
   card.querySelector('.popup__features').textContent = cardDate.offer.features.join(", ");
