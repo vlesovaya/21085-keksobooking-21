@@ -40,6 +40,15 @@ function getMockAds() {
   return ads;
 }
 
+function localizeType(type) {
+  const sayings = new Map();
+  sayings.set('flat', 'Квартира');
+  sayings.set('bungalow', 'Бунгало');
+  sayings.set('house', 'Дом');
+  sayings.set('palace', 'Дворец');
+  return sayings.get(type);
+}
+
 function removeFaded(mapElement) {
   mapElement.classList.remove(`map--faded`);
 }
@@ -84,14 +93,8 @@ function addCard(cardDate, template, mapElement) {
   card.querySelector('.popup__text--address').textContent = cardDate.offer.address;
   card.querySelector('.popup__text--price').textContent = cardDate.offer.price + '₽/ночь';
 
-  const sayings = new Map();
-  sayings.set('flat', 'Квартира');
-  sayings.set('bungalow', 'Бунгало');
-  sayings.set('house', 'Дом');
-  sayings.set('palace', 'Дворец');
-  card.querySelector('.popup__type').textContent = sayings.get(cardDate.offer.type);
-
   card.querySelector('.popup__text--capacity').textContent = cardDate.offer.rooms + ' комнаты для ' + cardDate.offer.guests + ' гостей';
+  card.querySelector('.popup__type').textContent = localizeType(cardDate.offer.type);
   card.querySelector('.popup__text--time').textContent = 'Заезд после ' + cardDate.offer.checkin + ' выезд до ' + cardDate.offer.checkout;
   card.querySelector('.popup__features').textContent = cardDate.offer.features.join(", ");
   card.querySelector('.popup__description').textContent = cardDate.offer.description;
