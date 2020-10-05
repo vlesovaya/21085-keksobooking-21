@@ -105,7 +105,7 @@ function addCard(cardDate, template, mapElement) {
     return cardDate.offer.rooms + ' комнаты для ' + cardDate.offer.guests + ' гостей';
   });
   verifyAndAddTextData(card, '.popup__text--time', cardDate.offer.checkin, function () {
-    return 'Заезд после ' + cardDate.offer.checkin + ' выезд до ' + cardDate.offer.checkout;
+    return 'Заезд после ' + cardDate.offer.checkin + ',' + ' выезд до ' + cardDate.offer.checkout;
   });
   verifyAndAddTextData(card, '.popup__features', cardDate.offer.features, function () {
     return cardDate.offer.features.join(", ");
@@ -119,7 +119,7 @@ function addCard(cardDate, template, mapElement) {
 
   for (let photo of cardDate.offer.photos) {
     let newPhotoElement = photoElement.cloneNode(true);
-    photoElement.src = photo;
+    newPhotoElement.src = photo;
     card.querySelector('.popup__photos').appendChild(newPhotoElement);
   }
   card.querySelector('.popup__avatar').src = cardDate.author.avatar;
