@@ -53,6 +53,10 @@ function removeFaded(mapElement) {
   mapElement.classList.remove(`map--faded`);
 }
 
+function removeDisabled(advForm) {
+  advForm.classList.remove('ad-form--disabled');
+}
+
 function addPin(pinData, template, mapElement) {
   const pin = template.cloneNode(true);
   const PIN_WIDTH = 40;
@@ -146,14 +150,17 @@ function verifyAndAddTextData(card, selector, data, dataMap) {
 // Активность карты по щелчку мыши (нужен еще счелчок только правой кнопкой)
 function setupActiveClick() {
   const mapPin = document.querySelector('.map__pin--main');
+  const form = document.querySelector('.ad-form');
   mapPin.addEventListener('mousedown', function (evt) {
     if (evt.button === 0) {
       removeFaded(map);
+      removeDisabled(form);
     }
   });
   document.addEventListener('keydown', function (evt) {
     if (evt.key === 'Enter') {
       removeFaded(map);
+      removeDisabled(form);
     }
   });
 }
