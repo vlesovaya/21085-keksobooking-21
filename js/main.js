@@ -155,7 +155,7 @@ function setupActiveClick() {
 
   const setAddressValue = function () {
     const mapPinRect = mapPin.getBoundingClientRect();
-    addressInput.value = (mapPinRect.right + mapPinRect.left) / 2 + "," + mapPinRect.bottom;
+    addressInput.value = (mapPinRect.right + mapPinRect.left) / 2 + ", " + mapPinRect.bottom;
   };
 
   mapPin.addEventListener('mousedown', function (evt) {
@@ -179,25 +179,52 @@ setupActiveClick();
 
 // Отправка формы
 
-const advHeadInput = document.getElementById('title');
+function addValidation() {
+  const advHeadInput = document.getElementById('title');
+  addInputValidation(advHeadInput);
 
-advHeadInput.addEventListener('invalid', function () {
-  if (advHeadInput.validity.tooShort) {
-    advHeadInput.setCustomValidity('Заголовок должен состоять минимум из 30-ти символов');
-  } else if (advHeadInput.validity.tooLong) {
-    advHeadInput.setCustomValidity('Заголовок не должен превышать 100 символов');
-  } else if (advHeadInput.validity.valueMissing) {
-    advHeadInput.setCustomValidity('Обязательное поле');
-  } else {
-    advHeadInput.setCustomValidity('');
-  }
-});
+  const advCapacityElement = document.getElementById('capacity');
+  const advRoomElement = document.getElementById('room_number');
+  addSelectsValidation(advCapacityElement, advRoomElement);
+}
 
-const advCapacityValue = document.getElementById('capacity');
-const advRoomValue = document.getElementById('room_number');
+function addInputValidation(input) {
+  input.addEventListener('invalid', function () {
+    if (input.validity.tooShort) {
+      input.setCustomValidity('Заголовок должен состоять минимум из 30-ти символов');
+    } else if (input.validity.tooLong) {
+      input.setCustomValidity('Заголовок не должен превышать 100 символов');
+    } else if (input.validity.valueMissing) {
+      input.setCustomValidity('Обязательное поле');
+    } else {
+      input.setCustomValidity('');
+    }
+  });
+}
 
-advRoomValue.addEventListener('invalid', function () {
-  if (advRoomValue.validity.value < advCapacityValue.validity.value) {
-    advRoomValue.setCustomValidity('Вам нужен вариант размещения с большим количеством комнат');
-  }
-});
+function addSelectsValidation(capacitySelect, roomSelect) {
+  const onChangeEvent = function (newRoomsValue) {
+    const roomCapacityMap = new Map();
+    roomCapacityMap.set("1", ["1"]);
+    roomCapacityMap.set("2", ["2", "1"]);
+    roomCapacityMap.set("3", ["3", "2", "1"]);
+    roomCapacityMap.set("100", ["0"]);
+    const capacityForRooms = roomCapacityMap.get(newRoomsValue);
+
+    for (let i = 0; i < capacitySelect.options.length; i++) {
+      if (capacityForRooms.includes(capacitySelect.options[i].value)) {
+        capacitySelect.options[i].disabled = false;
+        capacitySelect.options[i].selected = true;
+      } else {
+        capacitySelect.options[i].disabled = true;
+      }
+    }
+  };
+  roomSelect.addEventListener('change', (event) => {
+    const rooms = event.target.value;
+    onChangeEvent(rooms);
+  });
+  onChangeEvent(roomSelect.value);
+}
+
+addValidation();
