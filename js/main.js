@@ -78,7 +78,7 @@ function addPins(mapElement) {
 
 const map = document.querySelector(`.map`);
 // removeFaded(map);
-// addPins(map);
+addPins(map);
 
 // Часть 2
 
@@ -140,7 +140,7 @@ function verifyAndAddTextData(card, selector, data, dataMap) {
   }
 }
 
-// addCards(map);
+addCards(map);
 // Задание 10
 
 // function disableField() {
