@@ -148,7 +148,7 @@ addCards(map);
 //   document.querySelector('.ad-form').disabled = true;
 // }
 
-// Активность карты по щелчку мыши (нужен еще счелчок только правой кнопкой)
+// Активность карты по щелчку мыши
 function setupActiveClick() {
   const mapPin = document.querySelector('.map__pin--main');
   const form = document.querySelector('.ad-form');
@@ -167,16 +167,15 @@ function setupActiveClick() {
     if (evt.button === 0) {
       removeFaded(map);
       removeDisabled(form);
-      setAddressValue();
     }
   });
   document.addEventListener('keydown', function (evt) {
     if (evt.key === 'Enter') {
       removeFaded(map);
       removeDisabled(form);
-      setAddressValue();
     }
   });
+  setAddressValue();
 }
 
 setupActiveClick();
