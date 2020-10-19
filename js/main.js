@@ -153,10 +153,14 @@ function setupActiveClick() {
   const mapPin = document.querySelector('.map__pin--main');
   const form = document.querySelector('.ad-form');
   const addressInput = document.getElementById('address');
+  const overlay = document.querySelector('.map__overlay');
 
   const setAddressValue = function () {
+    const overlayRect = overlay.getBoundingClientRect();
     const mapPinRect = mapPin.getBoundingClientRect();
-    addressInput.value = (mapPinRect.right + mapPinRect.left) / 2 + ", " + mapPinRect.bottom;
+    const leftPinPosition = Math.round((mapPinRect.width / 2) + mapPinRect.left - overlayRect.left);
+    const topPinPosition = Math.round(mapPinRect.top + mapPinRect.height - overlayRect.top);
+    addressInput.value = leftPinPosition + ', ' + topPinPosition;
   };
 
   mapPin.addEventListener('mousedown', function (evt) {
