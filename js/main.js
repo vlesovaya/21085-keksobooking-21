@@ -146,18 +146,14 @@ addCards(map);
 
 // Блокировка формы в неактивном состоянии
 
-function disableField() {
+function setAdFormsInteractionAvailability(isAvailable) {
   const advForm = document.querySelector('.ad-form');
   const formElements = advForm.elements;
   for (let i = 0; i < formElements.length; ++i) {
-    if (setupActiveClick()) {
-      formElements[i].disabled = false;
-    } else {
-      formElements[i].disabled = true;
-    }
+    formElements[i].disabled = !isAvailable;
   }
 }
-disableField();
+setAdFormsInteractionAvailability(false);
 
 // Активность карты по щелчку мыши
 function setupActiveClick() {
@@ -179,12 +175,14 @@ function setupActiveClick() {
     if (evt.button === 0) {
       removeFaded(map);
       removeDisabled(form);
+      setAdFormsInteractionAvailability(true);
     }
   });
   document.addEventListener('keydown', function (evt) {
     if (evt.key === 'Enter') {
       removeFaded(map);
       removeDisabled(form);
+      setAdFormsInteractionAvailability(true);
     }
   });
   setAddressValue();
