@@ -144,9 +144,20 @@ function verifyAndAddTextData(card, selector, data, dataMap) {
 addCards(map);
 // Задание 10
 
-// function disableField() {
-//   document.querySelector('.ad-form').disabled = true;
-// }
+// Блокировка формы в неактивном состоянии
+
+function disableField() {
+  const advForm = document.querySelector('.ad-form');
+  const formElements = advForm.elements;
+  for (let i = 0; i < formElements.length; ++i) {
+    if (setupActiveClick()) {
+      formElements[i].disabled = false;
+    } else {
+      formElements[i].disabled = true;
+    }
+  }
+}
+disableField();
 
 // Активность карты по щелчку мыши
 function setupActiveClick() {
