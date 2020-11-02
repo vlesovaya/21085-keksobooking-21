@@ -204,6 +204,10 @@ function addValidation() {
   const advCheckIn = document.getElementById(`timein`);
   const advCheckOut = document.getElementById(`timeout`);
   addTimeValidation(advCheckIn, advCheckOut);
+
+  const advPrice = document.getElementById(`price`);
+  const advTypeOfHouse = document.getElementById('type');
+  addTypeValidation(advTypeOfHouse, advPrice);
 }
 
 function addInputValidation(input) {
@@ -220,21 +224,37 @@ function addInputValidation(input) {
   });
 }
 
-function priceInputValidation() {
-  const priceInput = document.getElementById(`price`);
-  priceInput.max = `1000000`;
-  priceInput.min = `0`;
+function priceInputValidation(priceInput, maxValue, minValue) {
+  priceInput.max = maxValue;
+  priceInput.min = minValue;
+  priceInput.placeholder = minValue;
   priceInput.addEventListener(`change`, function () {
-    if (priceInput.value > 1000000) {
-      priceInput.value = `1000000`;
+    if (priceInput.value > maxValue) {
+      priceInput.value = maxValue;
     }
 
-    if (priceInput.value < 0) {
-      priceInput.value = `0`;
+    if (priceInput.value < minValue) {
+      priceInput.value = minValue;
     }
   });
 }
-priceInputValidation();
+
+function addTypeValidation(typeOfHousing, priceInput) {
+  const onChangeEvent = function (newTypeValue) {
+    const checkTypeMap = new Map();
+    checkTypeMap.set("bungalow", 0);
+    checkTypeMap.set("flat", 1000);
+    checkTypeMap.set("house", 5000);
+    checkTypeMap.set("palace", 10000);
+    const minValue = checkTypeMap.get(newTypeValue);
+    priceInputValidation(priceInput, 1000000, minValue);
+  };
+  typeOfHousing.addEventListener(`change`, (event) => {
+    const type = event.target.value;
+    onChangeEvent(type);
+  });
+  onChangeEvent(typeOfHousing.value);
+}
 
 function addTimeValidation(checkInSelect, checkOutSelect) {
   const onChangeEvent = function (newTimesValue) {
