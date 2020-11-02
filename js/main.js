@@ -216,6 +216,22 @@ function addInputValidation(input) {
   });
 }
 
+function priceInputValidation() {
+  let priceInput = document.getElementById('price');
+  priceInput.max = "1000000";
+  priceInput.min = "0";
+  priceInput.addEventListener("change", function () {
+    if (priceInput.value > "1000000") {
+      priceInput.value = "1000000";
+    }
+
+    if (priceInput.value < "0") {
+      priceInput.value = "0";
+    }
+  });
+}
+priceInputValidation();
+
 function addSelectsValidation(capacitySelect, roomSelect) {
   const onChangeEvent = function (newRoomsValue) {
     const roomCapacityMap = new Map();
