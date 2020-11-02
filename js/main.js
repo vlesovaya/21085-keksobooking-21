@@ -200,6 +200,10 @@ function addValidation() {
   const advCapacityElement = document.getElementById(`capacity`);
   const advRoomElement = document.getElementById(`room_number`);
   addSelectsValidation(advCapacityElement, advRoomElement);
+
+  const advCheckIn = document.getElementById(`timein`);
+  const advCheckOut = document.getElementById(`timeout`);
+  addTimeValidation(advCheckIn, advCheckOut);
 }
 
 function addInputValidation(input) {
@@ -217,20 +221,44 @@ function addInputValidation(input) {
 }
 
 function priceInputValidation() {
-  let priceInput = document.getElementById('price');
-  priceInput.max = "1000000";
-  priceInput.min = "0";
-  priceInput.addEventListener("change", function () {
-    if (priceInput.value > "1000000") {
-      priceInput.value = "1000000";
+  const priceInput = document.getElementById(`price`);
+  priceInput.max = `1000000`;
+  priceInput.min = `0`;
+  priceInput.addEventListener(`change`, function () {
+    if (priceInput.value > 1000000) {
+      priceInput.value = `1000000`;
     }
 
-    if (priceInput.value < "0") {
-      priceInput.value = "0";
+    if (priceInput.value < 0) {
+      priceInput.value = `0`;
     }
   });
 }
 priceInputValidation();
+
+function addTimeValidation(checkInSelect, checkOutSelect) {
+  const onChangeEvent = function (newTimesValue) {
+    const checkTimeMap = new Map();
+    checkTimeMap.set(`12:00`, [`12:00`]);
+    checkTimeMap.set(`13:00`, [`13:00`]);
+    checkTimeMap.set(`14:00`, [`14:00`]);
+    const timesForCheck = checkTimeMap.get(newTimesValue);
+
+    for (let i = 0; i < checkOutSelect.options.length; i++) {
+      if (timesForCheck.includes(checkOutSelect.options[i].value)) {
+        checkOutSelect.options[i].disabled = false;
+        checkOutSelect.options[i].selected = true;
+      } else {
+        checkOutSelect.options[i].disabled = true;
+      }
+    }
+  };
+  checkInSelect.addEventListener(`change`, (event) => {
+    const times = event.target.value;
+    onChangeEvent(times);
+  });
+  onChangeEvent(checkOutSelect.value);
+}
 
 function addSelectsValidation(capacitySelect, roomSelect) {
   const onChangeEvent = function (newRoomsValue) {
