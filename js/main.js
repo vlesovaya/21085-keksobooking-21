@@ -306,3 +306,46 @@ function addSelectsValidation(capacitySelect, roomSelect) {
 }
 
 addValidation();
+
+// Карточки объявлений открытие / закрытие
+
+const popupOpen = document.querySelector(".map__pin");
+const mapPopup = document.querySelector(".map__card");
+const popupClose = document.querySelector(".popup__close");
+
+const onPopupEscPress = function (evt) {
+  if (evt.key === 'Escape') {
+    evt.preventDefault();
+    closePopup();
+  }
+};
+
+const openPopup = function () {
+  mapPopup.classList.remove('hidden');
+  document.addEventListener('keydown', onPopupEscPress);
+};
+
+const closePopup = function () {
+  mapPopup.classList.add('hidden');
+  document.removeEventListener('keydown', onPopupEscPress);
+};
+
+popupOpen.addEventListener('click', function () {
+  openPopup();
+});
+
+popupOpen.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter') {
+    openPopup();
+  }
+});
+
+popupClose.addEventListener('click', function () {
+  closePopup();
+});
+
+popupClose.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter') {
+    closePopup();
+  }
+});
