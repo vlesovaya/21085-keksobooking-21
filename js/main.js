@@ -1,5 +1,8 @@
 'use strict';
 
+const cardTemplate = document.querySelector(`#card`).content.querySelector(`article`);
+const map = document.querySelector(`.map`);
+
 function getRandomInteger(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
@@ -40,6 +43,8 @@ function getMockAds() {
   return ads;
 }
 
+const data = getMockAds();
+
 const sayings = new Map();
 sayings.set(`flat`, `Квартира`);
 sayings.set(`bungalow`, `Бунгало`);
@@ -66,82 +71,93 @@ function addPin(pinData, template, mapElement) {
   pin.style.top = pinData.location.y - PIN_HEIGHT / 2 + `px`;
   pin.querySelector(`img`).src = pinData.author.avatar;
   pin.querySelector(`img`).alt = pinData.offer.title;
+  pin.addEventListener('click', function() {
+      updateCard(pinData)
+      openCard()
+    })
+  pin.addEventListener(`keydown`, function (evt) {
+    if (evt.key === `Enter`) {
+      updateCard(pinData)
+      openCard()
+    }
+  });
   mapElement.appendChild(pin);
 }
 
 function addPins(mapElement) {
-  const pinsData = getMockAds();
   const template = document.querySelector(`#pin`).content.querySelector(`button`);
-  for (let ad of pinsData) {
+  for (let ad of data) {
     addPin(ad, template, mapElement);
   }
 }
 
-const map = document.querySelector(`.map`);
-// removeFaded(map);
-addPins(map);
 
-// Часть 2
-
-// Отрисовывает DOM-элемент
-function addCards(mapElement) {
-  const cardDate = getMockAds();
-  const template = document.querySelector(`#card`).content.querySelector(`article`);
-  const ad = cardDate[0];
-  addCard(ad, template, mapElement);
-}
-
-// Создает карточку и заполняет данными
-function addCard(cardDate, template, mapElement) {
-  const card = template.cloneNode(true);
-  verifyAndAddTextData(card, `.popup__title`, cardDate.offer.title, function () {
-    return cardDate.offer.title;
-  });
-  verifyAndAddTextData(card, `.popup__text--address`, cardDate.offer.address, function () {
-    return cardDate.offer.address;
-  });
-  verifyAndAddTextData(card, `.popup__text--price`, cardDate.offer.price, function () {
-    return cardDate.offer.price + `₽/ночь`;
-  });
-  verifyAndAddTextData(card, `.popup__type`, cardDate.offer.type, function () {
-    return localizeType(cardDate.offer.type);
-  });
-  verifyAndAddTextData(card, `.popup__text--capacity`, cardDate.offer.rooms, function () {
-    return cardDate.offer.rooms + ` комнаты для ` + cardDate.offer.guests + ` гостей`;
-  });
-  verifyAndAddTextData(card, `.popup__text--time`, cardDate.offer.checkin, function () {
-    return `Заезд после ` + cardDate.offer.checkin + `,` + ` выезд до ` + cardDate.offer.checkout;
-  });
-  verifyAndAddTextData(card, `.popup__features`, cardDate.offer.features, function () {
-    return cardDate.offer.features.join(`, `);
-  });
-  verifyAndAddTextData(card, `.popup__description`, cardDate.offer.description, function () {
-    return cardDate.offer.description;
-  });
+// Обновляет данные в карточке
+function updateCard(cardData) {
+  const fields = [
+    {
+      className: `.popup__title`,
+      field: cardData.offer.title,
+      text: cardData.offer.title
+    },
+    {
+      className: `.popup__text--address`,
+      field: cardData.offer.address,
+      text: cardData.offer.address
+    },
+    {
+      className: `.popup__text--price`,
+      field: cardData.offer.price,
+      text: `${cardData.offer.price} ₽/ночь`
+    },
+    {
+      className: `.popup__type`,
+      field: cardData.offer.type,
+      text: localizeType(cardData.offer.type)
+    },
+    {
+      className: `.popup__text--capacity`,
+      field: cardData.offer.rooms,
+      text: `${cardData.offer.rooms} комнаты для ${cardData.offer.guests} гостей`
+    },
+    {
+      className: `.popup__text--time`,
+      field: cardData.offer.checkin,
+      text: `Заезд после ${cardData.offer.checkin}, выезд до ${cardData.offer.checkout}`
+    },
+    {
+      className: `.popup__features`,
+      field: cardData.offer.features,
+      text: cardData.offer.features.join(`, `)
+    },
+    {
+      className: `.popup__description`,
+      field: cardData.offer.description,
+      text: cardData.offer.description
+    }
+  ]
+  fields.forEach(field => verifyAndAddTextData(card, field.className, field.field, field.text))
 
   let photoElement = card.querySelector(`.popup__photos`).querySelector(`.popup__photo`);
   card.querySelector(`.popup__photos`).removeChild(photoElement);
 
-  for (let photo of cardDate.offer.photos) {
+  for (let photo of cardData.offer.photos) {
     let newPhotoElement = photoElement.cloneNode(true);
     newPhotoElement.src = photo;
     card.querySelector(`.popup__photos`).appendChild(newPhotoElement);
   }
-  card.querySelector(`.popup__avatar`).src = cardDate.author.avatar;
-
-  mapElement.insertBefore(card, mapElement.querySelector(`.map__filters-container`));
+  card.querySelector(`.popup__avatar`).src = cardData.author.avatar;
 }
 
 // Скрывает элемент без данных
 function verifyAndAddTextData(card, selector, data, dataMap) {
   if (data !== null) {
-    card.querySelector(selector).textContent = dataMap();
+    card.querySelector(selector).textContent = dataMap;
   } else {
     card.querySelector(selector).hidden = true;
   }
 }
 
-addCards(map);
 // Задание 10
 
 // Блокировка формы в неактивном состоянии
@@ -307,45 +323,71 @@ function addSelectsValidation(capacitySelect, roomSelect) {
 
 addValidation();
 
+addPins(map);
+
+function closeCard (card) {
+  card.classList.add('hidden')
+}
+
+function openCard() {
+  card.classList.remove('hidden')
+}
+
+const createCard = () => {
+  const card = cardTemplate.cloneNode(true);
+  closeCard(card)
+  const closeButton = card.querySelector('.popup__close');
+  closeButton.addEventListener('click', () => closeCard(card))
+  closeButton.addEventListener(`keydown`, function (evt) {
+    if (evt.key === `Enter`) {
+      closeCard(card)
+    }
+  });
+  map.insertBefore(card, map.querySelector(`.map__filters-container`));
+  return card;
+}
+
+const card = createCard();
+
 // Карточки объявлений открытие / закрытие
 
-const popupOpen = document.querySelector(".map__pin");
-const mapPopup = document.querySelector(".map__card");
-const popupClose = document.querySelector(".popup__close");
-
-const onPopupEscPress = function (evt) {
-  if (evt.key === 'Escape') {
-    evt.preventDefault();
-    closePopup();
-  }
-};
-
-const openPopup = function () {
-  mapPopup.classList.remove('hidden');
-  document.addEventListener('keydown', onPopupEscPress);
-};
-
-const closePopup = function () {
-  mapPopup.classList.add('hidden');
-  document.removeEventListener('keydown', onPopupEscPress);
-};
-
-popupOpen.addEventListener('click', function () {
-  openPopup();
-});
-
-popupOpen.addEventListener('keydown', function (evt) {
-  if (evt.key === 'Enter') {
-    openPopup();
-  }
-});
-
-popupClose.addEventListener('click', function () {
-  closePopup();
-});
-
-popupClose.addEventListener('keydown', function (evt) {
-  if (evt.key === 'Enter') {
-    closePopup();
-  }
-});
+// const popupOpen = document.querySelector(".map__pin");
+// const mapPopup = document.querySelector(".map__card");
+// const popupClose = document.querySelector(".popup__close");
+//
+// const onPopupEscPress = function (evt) {
+//   if (evt.key === 'Escape') {
+//     evt.preventDefault();
+//     closePopup();
+//   }
+// };
+//
+// const openPopup = function () {
+//   mapPopup.classList.remove('hidden');
+//   document.addEventListener('keydown', onPopupEscPress);
+// };
+//
+// const closePopup = function () {
+//   mapPopup.classList.add('hidden');
+//   document.removeEventListener('keydown', onPopupEscPress);
+// };
+//
+// popupOpen.addEventListener('click', function () {
+//   openPopup();
+// });
+//
+// popupOpen.addEventListener('keydown', function (evt) {
+//   if (evt.key === 'Enter') {
+//     openPopup();
+//   }
+// });
+//
+// popupClose.addEventListener('click', function () {
+//   closePopup();
+// });
+//
+// popupClose.addEventListener('keydown', function (evt) {
+//   if (evt.key === 'Enter') {
+//     closePopup();
+//   }
+// });
