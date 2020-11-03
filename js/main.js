@@ -71,14 +71,14 @@ function addPin(pinData, template, mapElement) {
   pin.style.top = pinData.location.y - PIN_HEIGHT / 2 + `px`;
   pin.querySelector(`img`).src = pinData.author.avatar;
   pin.querySelector(`img`).alt = pinData.offer.title;
-  pin.addEventListener('click', function() {
-      updateCard(pinData)
-      openCard()
-    })
+  pin.addEventListener('click', function () {
+    updateCard(pinData);
+    openCard();
+  });
   pin.addEventListener(`keydown`, function (evt) {
     if (evt.key === `Enter`) {
-      updateCard(pinData)
-      openCard()
+      updateCard(pinData);
+      openCard();
     }
   });
   mapElement.appendChild(pin);
@@ -98,45 +98,45 @@ function updateCard(cardData) {
     {
       className: `.popup__title`,
       field: cardData.offer.title,
-      text: cardData.offer.title
+      text: cardData.offer.title,
     },
     {
       className: `.popup__text--address`,
       field: cardData.offer.address,
-      text: cardData.offer.address
+      text: cardData.offer.address,
     },
     {
       className: `.popup__text--price`,
       field: cardData.offer.price,
-      text: `${cardData.offer.price} ₽/ночь`
+      text: `${cardData.offer.price} ₽/ночь`,
     },
     {
       className: `.popup__type`,
       field: cardData.offer.type,
-      text: localizeType(cardData.offer.type)
+      text: localizeType(cardData.offer.type),
     },
     {
       className: `.popup__text--capacity`,
       field: cardData.offer.rooms,
-      text: `${cardData.offer.rooms} комнаты для ${cardData.offer.guests} гостей`
+      text: `${cardData.offer.rooms} комнаты для ${cardData.offer.guests} гостей`,
     },
     {
       className: `.popup__text--time`,
       field: cardData.offer.checkin,
-      text: `Заезд после ${cardData.offer.checkin}, выезд до ${cardData.offer.checkout}`
+      text: `Заезд после ${cardData.offer.checkin}, выезд до ${cardData.offer.checkout}`,
     },
     {
       className: `.popup__features`,
       field: cardData.offer.features,
-      text: cardData.offer.features.join(`, `)
+      text: cardData.offer.features.join(`, `),
     },
     {
       className: `.popup__description`,
       field: cardData.offer.description,
-      text: cardData.offer.description
-    }
-  ]
-  fields.forEach(field => verifyAndAddTextData(card, field.className, field.field, field.text))
+      text: cardData.offer.description,
+    },
+  ];
+  fields.forEach((field) => verifyAndAddTextData(card, field.className, field.field, field.text));
 
   let photoElement = card.querySelector(`.popup__photos`).querySelector(`.popup__photo`);
   card.querySelector(`.popup__photos`).removeChild(photoElement);
@@ -150,8 +150,8 @@ function updateCard(cardData) {
 }
 
 // Скрывает элемент без данных
-function verifyAndAddTextData(card, selector, data, dataMap) {
-  if (data !== null) {
+function verifyAndAddTextData(card, selector, textData, dataMap) {
+  if (textData !== null) {
     card.querySelector(selector).textContent = dataMap;
   } else {
     card.querySelector(selector).hidden = true;
@@ -169,6 +169,7 @@ function setAdFormsInteractionAvailability(isAvailable) {
     formElements[i].disabled = !isAvailable;
   }
 }
+
 setAdFormsInteractionAvailability(false);
 
 // Активность карты по щелчку мыши
@@ -325,27 +326,27 @@ addValidation();
 
 addPins(map);
 
-function closeCard (card) {
-  card.classList.add('hidden')
+function closeCard(card) {
+  card.classList.add('hidden');
 }
 
 function openCard() {
-  card.classList.remove('hidden')
+  card.classList.remove('hidden');
 }
 
 const createCard = () => {
   const card = cardTemplate.cloneNode(true);
-  closeCard(card)
+  closeCard(card);
   const closeButton = card.querySelector('.popup__close');
-  closeButton.addEventListener('click', () => closeCard(card))
+  closeButton.addEventListener('click', () => closeCard(card));
   closeButton.addEventListener(`keydown`, function (evt) {
     if (evt.key === `Enter`) {
-      closeCard(card)
+      closeCard(card);
     }
   });
   map.insertBefore(card, map.querySelector(`.map__filters-container`));
   return card;
-}
+};
 
 const card = createCard();
 
