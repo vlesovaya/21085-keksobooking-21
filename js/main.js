@@ -71,7 +71,7 @@ function addPin(pinData, template, mapElement) {
   pin.style.top = pinData.location.y - PIN_HEIGHT / 2 + `px`;
   pin.querySelector(`img`).src = pinData.author.avatar;
   pin.querySelector(`img`).alt = pinData.offer.title;
-  pin.addEventListener('click', function () {
+  pin.addEventListener(`click`, function () {
     updateCard(pinData);
     openCard();
   });
@@ -223,7 +223,7 @@ function addValidation() {
   addTimeValidation(advCheckIn, advCheckOut);
 
   const advPrice = document.getElementById(`price`);
-  const advTypeOfHouse = document.getElementById('type');
+  const advTypeOfHouse = document.getElementById(`type`);
   addTypeValidation(advTypeOfHouse, advPrice);
 }
 
@@ -259,10 +259,10 @@ function priceInputValidation(priceInput, maxValue, minValue) {
 function addTypeValidation(typeOfHousing, priceInput) {
   const onChangeEvent = function (newTypeValue) {
     const checkTypeMap = new Map();
-    checkTypeMap.set("bungalow", 0);
-    checkTypeMap.set("flat", 1000);
-    checkTypeMap.set("house", 5000);
-    checkTypeMap.set("palace", 10000);
+    checkTypeMap.set(`bungalow`, 0);
+    checkTypeMap.set(`flat`, 1000);
+    checkTypeMap.set(`house`, 5000);
+    checkTypeMap.set(`palace`, 10000);
     const minValue = checkTypeMap.get(newTypeValue);
     priceInputValidation(priceInput, 1000000, minValue);
   };
@@ -327,18 +327,18 @@ addValidation();
 addPins(map);
 
 function closeCard(card) {
-  card.classList.add('hidden');
+  card.classList.add(`hidden`);
 }
 
 function openCard() {
-  card.classList.remove('hidden');
+  card.classList.remove(`hidden`);
 }
 
 const createCard = () => {
   const card = cardTemplate.cloneNode(true);
   closeCard(card);
-  const closeButton = card.querySelector('.popup__close');
-  closeButton.addEventListener('click', () => closeCard(card));
+  const closeButton = card.querySelector(`.popup__close`);
+  closeButton.addEventListener(`click`, () => closeCard(card));
   closeButton.addEventListener(`keydown`, function (evt) {
     if (evt.key === `Enter`) {
       closeCard(card);
@@ -349,46 +349,3 @@ const createCard = () => {
 };
 
 const card = createCard();
-
-// Карточки объявлений открытие / закрытие
-
-// const popupOpen = document.querySelector(".map__pin");
-// const mapPopup = document.querySelector(".map__card");
-// const popupClose = document.querySelector(".popup__close");
-//
-// const onPopupEscPress = function (evt) {
-//   if (evt.key === 'Escape') {
-//     evt.preventDefault();
-//     closePopup();
-//   }
-// };
-//
-// const openPopup = function () {
-//   mapPopup.classList.remove('hidden');
-//   document.addEventListener('keydown', onPopupEscPress);
-// };
-//
-// const closePopup = function () {
-//   mapPopup.classList.add('hidden');
-//   document.removeEventListener('keydown', onPopupEscPress);
-// };
-//
-// popupOpen.addEventListener('click', function () {
-//   openPopup();
-// });
-//
-// popupOpen.addEventListener('keydown', function (evt) {
-//   if (evt.key === 'Enter') {
-//     openPopup();
-//   }
-// });
-//
-// popupClose.addEventListener('click', function () {
-//   closePopup();
-// });
-//
-// popupClose.addEventListener('keydown', function (evt) {
-//   if (evt.key === 'Enter') {
-//     closePopup();
-//   }
-// });
