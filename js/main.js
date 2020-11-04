@@ -5,16 +5,6 @@ const map = document.querySelector(`.map`);
 
 const data = window.data.getMockAds();
 
-const sayings = new Map();
-sayings.set(`flat`, `Квартира`);
-sayings.set(`bungalow`, `Бунгало`);
-sayings.set(`house`, `Дом`);
-sayings.set(`palace`, `Дворец`);
-
-function localizeType(type) {
-  return sayings.get(type);
-}
-
 function removeFaded(mapElement) {
   mapElement.classList.remove(`map--faded`);
 }
@@ -73,7 +63,7 @@ function updateCard(cardData) {
     {
       className: `.popup__type`,
       field: cardData.offer.type,
-      text: localizeType(cardData.offer.type),
+      text: window.localization.localizeType(cardData.offer.type),
     },
     {
       className: `.popup__text--capacity`,
