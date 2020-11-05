@@ -1,13 +1,8 @@
 'use strict';
 
-const cardTemplate = document.querySelector(`#card`).content.querySelector(`article`);
-const map = document.querySelector(`.map`);
+// const map = document.querySelector(`.map`);
 
 const data = window.data.getMockAds();
-
-function removeFaded(mapElement) {
-  mapElement.classList.remove(`map--faded`);
-}
 
 function removeDisabled(advForm) {
   advForm.classList.remove(`ad-form--disabled`);
@@ -22,13 +17,13 @@ function addPin(pinData, template, mapElement) {
   pin.querySelector(`img`).src = pinData.author.avatar;
   pin.querySelector(`img`).alt = pinData.offer.title;
   pin.addEventListener(`click`, function () {
-    updateCard(pinData);
-    openCard();
+    window.card.openCard();
+    window.card.updateCard(pinData);
   });
   pin.addEventListener(`keydown`, function (evt) {
     if (evt.key === `Enter`) {
-      updateCard(pinData);
-      openCard();
+      window.card.openCard();
+      window.card.updateCard(pinData);
     }
   });
   mapElement.appendChild(pin);
@@ -40,75 +35,6 @@ function addPins(mapElement) {
     addPin(ad, template, mapElement);
   }
 }
-
-
-// Обновляет данные в карточке
-function updateCard(cardData) {
-  const fields = [
-    {
-      className: `.popup__title`,
-      field: cardData.offer.title,
-      text: cardData.offer.title,
-    },
-    {
-      className: `.popup__text--address`,
-      field: cardData.offer.address,
-      text: cardData.offer.address,
-    },
-    {
-      className: `.popup__text--price`,
-      field: cardData.offer.price,
-      text: `${cardData.offer.price} ₽/ночь`,
-    },
-    {
-      className: `.popup__type`,
-      field: cardData.offer.type,
-      text: window.localization.localizeType(cardData.offer.type),
-    },
-    {
-      className: `.popup__text--capacity`,
-      field: cardData.offer.rooms,
-      text: `${cardData.offer.rooms} комнаты для ${cardData.offer.guests} гостей`,
-    },
-    {
-      className: `.popup__text--time`,
-      field: cardData.offer.checkin,
-      text: `Заезд после ${cardData.offer.checkin}, выезд до ${cardData.offer.checkout}`,
-    },
-    {
-      className: `.popup__features`,
-      field: cardData.offer.features,
-      text: cardData.offer.features.join(`, `),
-    },
-    {
-      className: `.popup__description`,
-      field: cardData.offer.description,
-      text: cardData.offer.description,
-    },
-  ];
-  fields.forEach((field) => verifyAndAddTextData(card, field.className, field.field, field.text));
-
-  let photoElement = card.querySelector(`.popup__photos`).querySelector(`.popup__photo`);
-  card.querySelector(`.popup__photos`).removeChild(photoElement);
-
-  for (let photo of cardData.offer.photos) {
-    let newPhotoElement = photoElement.cloneNode(true);
-    newPhotoElement.src = photo;
-    card.querySelector(`.popup__photos`).appendChild(newPhotoElement);
-  }
-  card.querySelector(`.popup__avatar`).src = cardData.author.avatar;
-}
-
-// Скрывает элемент без данных
-function verifyAndAddTextData(card, selector, textData, dataMap) {
-  if (textData !== null) {
-    card.querySelector(selector).textContent = dataMap;
-  } else {
-    card.querySelector(selector).hidden = true;
-  }
-}
-
-// Задание 10
 
 // Блокировка формы в неактивном состоянии
 
@@ -140,14 +66,14 @@ function setupActiveClick() {
 
   mapPin.addEventListener(`mousedown`, function (evt) {
     if (evt.button === 0) {
-      removeFaded(map);
+      window.map.removeFaded();
       removeDisabled(form);
       setAdFormsInteractionAvailability(true);
     }
   });
   document.addEventListener(`keydown`, function (evt) {
     if (evt.key === `Enter`) {
-      removeFaded(map);
+      window.map.removeFaded();
       removeDisabled(form);
       setAdFormsInteractionAvailability(true);
     }
@@ -274,28 +200,4 @@ function addSelectsValidation(capacitySelect, roomSelect) {
 
 addValidation();
 
-addPins(map);
-
-function closeCard(card) {
-  card.classList.add(`hidden`);
-}
-
-function openCard() {
-  card.classList.remove(`hidden`);
-}
-
-const createCard = () => {
-  const card = cardTemplate.cloneNode(true);
-  closeCard(card);
-  const closeButton = card.querySelector(`.popup__close`);
-  closeButton.addEventListener(`click`, () => closeCard(card));
-  closeButton.addEventListener(`keydown`, function (evt) {
-    if (evt.key === `Enter`) {
-      closeCard(card);
-    }
-  });
-  map.insertBefore(card, map.querySelector(`.map__filters-container`));
-  return card;
-};
-
-const card = createCard();
+addPins(window.map.getMap());
