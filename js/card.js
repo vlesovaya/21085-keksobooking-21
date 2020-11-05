@@ -1,11 +1,9 @@
 'use strict';
 
 (function () {
-  const cardTemplate = document.querySelector(`#card`).content.querySelector(`article`);
-  const map = window.map.getMap();
-
-  const createCard = () => {
-    const card = cardTemplate.cloneNode(true);
+  const createCard = function () {
+    const cardElement = window.elements.card();
+    const card = cardElement.cloneNode(true);
     closeCard(card);
     const closeButton = card.querySelector(`.popup__close`);
     closeButton.addEventListener(`click`, () => closeCard(card));
@@ -14,6 +12,7 @@
         closeCard(card);
       }
     });
+    const map = window.elements.map();
     map.insertBefore(card, map.querySelector(`.map__filters-container`));
     return card;
   };
@@ -34,7 +33,7 @@
   }
 
   // Обновляет данные в карточке
-  const updateCard = (cardData) => {
+  const updateCard = function (cardData) {
     const fields = [
       {
         className: `.popup__title`,
@@ -90,12 +89,12 @@
     card.querySelector(`.popup__avatar`).src = cardData.author.avatar;
   };
 
-  const openCard = () => {
+  const openCard = function () {
     card.classList.remove(`hidden`);
   };
 
   window.card = {
     openCard,
-    updateCard
+    updateCard,
   };
 })();

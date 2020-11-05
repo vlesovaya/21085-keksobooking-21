@@ -1,13 +1,8 @@
 'use strict';
 
 (function () {
-  const map = document.querySelector(`.map`);
-
-  const getMap = () => {
-    return map;
-  };
-
-  const removeFaded = () => {
+  const removeFaded = function () {
+    const map = window.elements.map();
     map.classList.remove(`map--faded`);
   };
 
@@ -29,6 +24,7 @@
       removeFaded();
       window.form.removeDisabled();
       window.form.setAdFormsInteractionAvailability(true);
+      window.pins.addPins();
     };
 
     mapPin.addEventListener(`mousedown`, function (evt) {
@@ -45,7 +41,6 @@
   };
 
   window.map = {
-    getMap,
-    setupActiveClick
+    setupActiveClick,
   };
 })();
