@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+  const form = document.querySelector(`.ad-form`);
+
   function addInputValidation(input) {
     input.addEventListener(`invalid`, function () {
       if (input.validity.tooShort) {
@@ -95,7 +97,7 @@
     onChangeEvent(roomSelect.value);
   }
 
-  const addValidation = () => {
+  const addValidation = function () {
     const advHeadInput = document.getElementById(`title`);
     addInputValidation(advHeadInput);
 
@@ -112,7 +114,20 @@
     addTypeValidation(advTypeOfHouse, advPrice);
   };
 
+  const removeDisabled = function () {
+    form.classList.remove(`ad-form--disabled`);
+  };
+
+  const setAdFormsInteractionAvailability = function (isAvailable) {
+    const formElements = form.elements;
+    for (let i = 0; i < formElements.length; ++i) {
+      formElements[i].disabled = !isAvailable;
+    }
+  };
+
   window.form = {
     addValidation,
+    removeDisabled,
+    setAdFormsInteractionAvailability
   };
 })();
