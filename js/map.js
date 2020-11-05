@@ -25,6 +25,7 @@
       window.form.removeDisabled();
       window.form.setAdFormsInteractionAvailability(true);
       window.pins.addPins();
+      mapPin.disabled = true;
     };
 
     mapPin.addEventListener(`mousedown`, function (evt) {
@@ -32,7 +33,7 @@
         onEvent();
       }
     });
-    document.addEventListener(`keydown`, function (evt) {
+    mapPin.addEventListener(`keydown`, function (evt) {
       if (evt.key === `Enter`) {
         onEvent();
       }
