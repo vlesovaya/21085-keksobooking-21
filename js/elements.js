@@ -1,9 +1,7 @@
 'use strict';
 
 (function () {
-  const map = function () {
-    return document.querySelector(`.map`);
-  };
+  const map = document.querySelector(`.map`);
 
   const card = function () {
     return document.querySelector(`#card`).content.querySelector(`article`);

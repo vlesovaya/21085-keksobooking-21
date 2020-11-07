@@ -2,7 +2,7 @@
 
 (function () {
   const removeFaded = function () {
-    const map = window.elements.map();
+    const map = window.elements.map;
     map.classList.remove(`map--faded`);
   };
 

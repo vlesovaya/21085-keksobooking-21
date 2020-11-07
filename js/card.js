@@ -12,7 +12,7 @@
         closeCard(card);
       }
     });
-    const map = window.elements.map();
+    const map = window.elements.map;
     map.insertBefore(card, map.querySelector(`.map__filters-container`));
     return card;
   };

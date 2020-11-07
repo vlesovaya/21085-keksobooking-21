@@ -25,7 +25,7 @@
   const addPins = function () {
     const template = document.querySelector(`#pin`).content.querySelector(`button`);
     const data = window.data.getMockAds();
-    const map = window.elements.map();
+    const map = window.elements.map;
     for (let ad of data) {
       addPin(ad, template, map);
     }
