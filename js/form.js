@@ -2,6 +2,11 @@
 
 (function () {
   const form = document.querySelector(`.ad-form`);
+  const addressInput = document.getElementById(`address`);
+
+  const setAddressValue = function (value) {
+    addressInput.value = value;
+  };
 
   function addInputValidation(input) {
     input.addEventListener(`invalid`, function () {
@@ -126,6 +131,7 @@
   };
 
   window.form = {
+    setAddressValue,
     addValidation,
     removeDisabled,
     setAdFormsInteractionAvailability
