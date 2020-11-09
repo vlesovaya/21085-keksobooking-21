@@ -24,18 +24,16 @@
 
   const addPins = function () {
     const template = document.querySelector(`#pin`).content.querySelector(`button`);
-
     const onSuccess = function (data) {
       const map = window.elements.map;
       for (let ad of data) {
         addPin(ad, template, map);
       }
     };
-
     const onError = function (error) {
-      console.log(error);
+      window.popups.showError(error);
     };
-    window.data.load('https://21.javascript.pages.academy/keksobooking/data', onSuccess, onError);
+    window.data.load(window.constants.dataUrl, onSuccess, onError);
   };
 
   window.pins = {

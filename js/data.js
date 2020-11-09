@@ -12,19 +12,18 @@
         case 200:
           onSuccess(request.response);
           break;
-
         case 400:
-          error = 'Неверный запрос';
+          error = window.localization.localizeError('error_400');
           break;
         case 401:
-          error = 'Пользователь не авторизован';
+          error = window.localization.localizeError('error_401');
           break;
         case 404:
-          error = 'Ничего не найдено';
+          error = window.localization.localizeError('error_404');
           break;
 
         default:
-          error = 'Cтатус ответа: : ' + request.status + ' ' + request.statusText;
+          error = window.localization.localizeError('error_timeout') + ': ' + request.status + ' ' + request.statusText;
       }
 
       if (error) {
@@ -33,11 +32,11 @@
     });
 
     request.addEventListener('error', function () {
-      onError('Произошла ошибка соединения');
+      onError(window.localization.localizeError('error_connection'));
     });
 
     request.addEventListener('timeout', function () {
-      onError('Запрос не успел выполниться за ' + request.timeout + 'мс');
+      onError(window.localization.localizeError('error_timeout') + request.timeout + 'ms');
     });
 
     request.timeout = 10000; // 10s
