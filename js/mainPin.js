@@ -24,18 +24,9 @@
     };
   }
 
-  function processMove(shiftX, shiftY) {
-    const mapPin = window.elements.mapPin;
-    const pinLeft = parseInt(mapPin.style.left, 10);
-    const pinTop = parseInt(mapPin.style.top, 10);
-    const newX = pinLeft - shiftX;
-    const newY = pinTop - shiftY;
-    if (newX < MovementLimitations.right && newX > MovementLimitations.left) {
-      mapPin.style.left = newX + `px`;
-    }
-    if (newY < MovementLimitations.bottom && newY > MovementLimitations.top) {
-      mapPin.style.top = newY + `px`;
-    }
+  function processMove(x, y, mapPin) {
+    mapPin.style.left = x + `px`;
+    mapPin.style.top = y + `px`;
   }
 
   function setupClick() {
@@ -58,6 +49,9 @@
       const startX = evt.clientX;
       const startY = evt.clientY;
 
+      const pinLeft = parseInt(mapPin.style.left, 10);
+      const pinTop = parseInt(mapPin.style.top, 10);
+
       const onMouseMove = function (moveEvt) {
         if (evt.button !== 0 || moveEnabled === false) {
           return;
@@ -65,7 +59,10 @@
         const shiftX = startX - moveEvt.clientX;
         const shiftY = startY - moveEvt.clientY;
 
-        processMove(shiftX, shiftY);
+        const currentX = pinLeft - shiftX;
+        const currentY = pinTop - shiftY;
+
+        processMove(currentX, currentY, mapPin);
       };
 
       const onMouseUp = function () {
