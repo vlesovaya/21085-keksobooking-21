@@ -24,9 +24,13 @@
     };
   }
 
-  function processMove(x, y, mapPin) {
-    mapPin.style.left = x + `px`;
-    mapPin.style.top = y + `px`;
+  function processMove(newX, newY, mapPin) {
+    if (newX < MovementLimitations.right && newX > MovementLimitations.left) {
+      mapPin.style.left = newX + `px`;
+    }
+    if (newY < MovementLimitations.bottom && newY > MovementLimitations.top) {
+      mapPin.style.top = newY + `px`;
+    }
   }
 
   function setupClick() {
