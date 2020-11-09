@@ -36,7 +36,7 @@
     if (newY < MovementLimitations.bottom && newY > MovementLimitations.top) {
       mapPin.style.top = newY + `px`;
     }
-  };
+  }
 
   function setupClick() {
     const mapPin = window.elements.mapPin;
@@ -92,7 +92,7 @@
         onActivationClickCallback();
       }
     });
-  };
+  }
 
   function didMove() {
     const mapPin = window.elements.mapPin;
@@ -106,7 +106,7 @@
     if (onMoveCallback !== null) {
       onMoveCallback(leftPinPosition, topPinPosition, PIN_TIP_HEIGHT);
     }
-  };
+  }
 
   const onActivationClick = function (callback) {
     onActivationClickCallback = callback;
