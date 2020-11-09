@@ -3,30 +3,39 @@
 (function () {
   let onActivationClickCallback;
   let onMoveCallback;
-  let moveMoveEnabled = false;
+  let moveEnabled = false;
   let isActive = false;
 
-  function didMove() {
-    const mapPin = window.elements.mapPin;
-    const overlay = window.elements.mapOverlay();
-    const PIN_TIP_HEIGHT = 15;
+  const PIN_TIP_HEIGHT = 15;
 
-    const overlayRect = overlay.getBoundingClientRect();
-    const mapPinRect = mapPin.getBoundingClientRect();
-    const leftPinPosition = Math.round((mapPinRect.width / 2) + mapPinRect.left - overlayRect.left);
-    const topPinPosition = Math.round(mapPinRect.top + mapPinRect.height - overlayRect.top);
-
-    if (onMoveCallback !== null) {
-      onMoveCallback(leftPinPosition, topPinPosition, PIN_TIP_HEIGHT);
-    }
+  const MovementLimitations = {
+    top: 130,
+    bottom: 630 - getPinSize().height,
+    left: 0,
+    right: 1200 - getPinSize().width,
   };
+
+  function getPinSize() {
+    const mapPin = window.elements.mapPin;
+    const mapPinRect = mapPin.getBoundingClientRect();
+    return {
+      height: mapPinRect.height + PIN_TIP_HEIGHT,
+      width: mapPinRect.width,
+    };
+  }
 
   function processMove(shiftX, shiftY) {
     const mapPin = window.elements.mapPin;
-    let left = mapPin.style.left - `px`;
-    let top = mapPin.style.top - `px`;
-    mapPin.style.left = (left + shiftX) + `px`;
-    mapPin.style.top = (top + shiftY) + `px`;
+    const pinLeft = parseInt(mapPin.style.left, 10);
+    const pinTop = parseInt(mapPin.style.top, 10);
+    const newX = pinLeft - shiftX;
+    const newY = pinTop - shiftY;
+    if (newX < MovementLimitations.right && newX > MovementLimitations.left) {
+      mapPin.style.left = newX + `px`;
+    }
+    if (newY < MovementLimitations.bottom && newY > MovementLimitations.top) {
+      mapPin.style.top = newY + `px`;
+    }
   };
 
   function setupClick() {
@@ -38,7 +47,7 @@
       }
 
       if (isActive) {
-        moveMoveEnabled = true;
+        moveEnabled = true;
       }
 
       if (onActivationClickCallback !== null && !isActive) {
@@ -49,22 +58,29 @@
       const startX = evt.clientX;
       const startY = evt.clientY;
 
-      mapPin.addEventListener(`mousemove`, function (moveEvt) {
-        if (evt.button !== 0 || moveMoveEnabled === false) {
+      const onMouseMove = function (moveEvt) {
+        if (evt.button !== 0 || moveEnabled === false) {
           return;
         }
         const shiftX = startX - moveEvt.clientX;
         const shiftY = startY - moveEvt.clientY;
 
         processMove(shiftX, shiftY);
-      });
+      };
 
-      mapPin.addEventListener(`mouseup`, function (evt) {
-        if (evt.button === 0) {
-          didMove();
+      const onMouseUp = function () {
+        if (evt.button !== 0 || moveEnabled === false) {
+          return;
         }
-        moveMoveEnabled = false;
-      });
+        didMove();
+        moveEnabled = false;
+
+        window.elements.map.removeEventListener(`mousemove`, onMouseMove);
+        window.elements.map.removeEventListener(`mouseup`, onMouseUp);
+      };
+
+      window.elements.map.addEventListener(`mousemove`, onMouseMove);
+      window.elements.map.addEventListener(`mouseup`, onMouseUp);
     });
 
     mapPin.addEventListener(`keydown`, function (evt) {
@@ -76,6 +92,20 @@
         onActivationClickCallback();
       }
     });
+  };
+
+  function didMove() {
+    const mapPin = window.elements.mapPin;
+    const overlay = window.elements.mapOverlay();
+
+    const mapPinRect = mapPin.getBoundingClientRect();
+    const overlayRect = overlay.getBoundingClientRect();
+    const leftPinPosition = Math.round((mapPinRect.width / 2) + mapPinRect.left - overlayRect.left);
+    const topPinPosition = Math.round(mapPinRect.top + mapPinRect.height - overlayRect.top);
+
+    if (onMoveCallback !== null) {
+      onMoveCallback(leftPinPosition, topPinPosition, PIN_TIP_HEIGHT);
+    }
   };
 
   const onActivationClick = function (callback) {
