@@ -24,14 +24,19 @@
 
   const addPins = function () {
     const template = document.querySelector(`#pin`).content.querySelector(`button`);
-    const data = window.data.getMockAds();
-    const map = window.elements.map;
-    for (let ad of data) {
-      addPin(ad, template, map);
-    }
+    const onSuccess = function (data) {
+      const map = window.elements.map;
+      for (let ad of data) {
+        addPin(ad, template, map);
+      }
+    };
+    const onError = function (error) {
+      window.popups.showError(error);
+    };
+    window.data.load(window.constants.dataUrl, onSuccess, onError);
   };
 
   window.pins = {
-    addPins
+    addPins,
   };
 })();
