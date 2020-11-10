@@ -102,6 +102,17 @@
     onChangeEvent(roomSelect.value);
   }
 
+  function sendForm(evt) {
+    evt.preventDefault();
+    const onSuccess = function (data) {
+      console.log("Sent successfully!" + data);
+    };
+    const onError = function (error) {
+      window.popups.showError(error);
+    };
+    window.data.post(window.constants.postFormUrl, new FormData(form), onSuccess, onError);
+  };
+
   const addValidation = function () {
     const advHeadInput = document.getElementById(`title`);
     addInputValidation(advHeadInput);
@@ -130,10 +141,15 @@
     }
   };
 
+  const addFormProcessing = function () {
+    form.addEventListener(`submit`, sendForm);
+  };
+
   window.form = {
     setAddressValue,
     addValidation,
     removeDisabled,
-    setAdFormsInteractionAvailability
+    setAdFormsInteractionAvailability,
+    addFormProcessing,
   };
 })();
