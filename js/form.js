@@ -2,6 +2,7 @@
 
 (function () {
   const form = document.querySelector(`.ad-form`);
+  const resetFormButton = document.querySelector(`.ad-form__reset`);
   const addressInput = document.getElementById(`address`);
 
   const setAddressValue = function (value) {
@@ -104,13 +105,20 @@
 
   function sendForm(evt) {
     evt.preventDefault();
-    const onSuccess = function (data) {
-      console.log("Sent successfully!" + data);
+    const onSuccess = function () {
+      window.popups.showSuccess();
+      resetForm(evt);
     };
     const onError = function (error) {
       window.popups.showError(error);
     };
     window.data.post(window.constants.postFormUrl, new FormData(form), onSuccess, onError);
+  };
+
+  function resetForm(evt) {
+    evt.preventDefault();
+    form.reset();
+    addValidation();
   };
 
   const addValidation = function () {
@@ -143,6 +151,7 @@
 
   const addFormProcessing = function () {
     form.addEventListener(`submit`, sendForm);
+    resetFormButton.addEventListener(`click`, resetForm);
   };
 
   window.form = {
