@@ -113,7 +113,7 @@
       window.popups.showError(error);
     };
     window.data.post(window.constants.postFormUrl, new FormData(form), onSuccess, onError);
-  };
+  }
 
   function resetForm(evt) {
     evt.preventDefault();
@@ -122,7 +122,7 @@
     setAdFormsInteractionAvailability(false);
     addDisabled();
     window.map.reset();
-  };
+  }
 
   const addValidation = function () {
     const advHeadInput = document.getElementById(`title`);
