@@ -119,6 +119,9 @@
     evt.preventDefault();
     form.reset();
     addValidation();
+    setAdFormsInteractionAvailability(false);
+    addDisabled();
+    window.map.reset();
   };
 
   const addValidation = function () {
@@ -142,6 +145,10 @@
     form.classList.remove(`ad-form--disabled`);
   };
 
+  const addDisabled = function () {
+    form.classList.add(`ad-form--disabled`);
+  };
+
   const setAdFormsInteractionAvailability = function (isAvailable) {
     const formElements = form.elements;
     for (let i = 0; i < formElements.length; ++i) {
@@ -158,6 +165,7 @@
     setAddressValue,
     addValidation,
     removeDisabled,
+    addDisabled,
     setAdFormsInteractionAvailability,
     addFormProcessing,
   };

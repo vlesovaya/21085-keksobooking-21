@@ -36,7 +36,13 @@
     window.data.load(window.constants.dataUrl, onSuccess, onError);
   };
 
+  const removePins = function () {
+    const pins = window.elements.map.querySelectorAll(`#pin`);
+    pins.forEach((pin) => window.elements.map.removeChild(pin));
+  };
+
   window.pins = {
     addPins,
+    removePins,
   };
 })();

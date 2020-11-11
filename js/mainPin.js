@@ -8,6 +8,11 @@
 
   const PIN_TIP_HEIGHT = 15;
 
+  let initialCoordinates = {
+    top: 0,
+    left: 0,
+  };
+
   const MovementLimitations = {
     top: 130,
     bottom: 630 - getPinSize().height,
@@ -118,12 +123,26 @@
   };
 
   const setup = function () {
+    isActive = false;
+    moveEnabled = false;
     setupClick();
     didMove();
+    const mapPin = window.elements.mapPin;
+    initialCoordinates = {
+      top: parseInt(mapPin.style.top, 10),
+      left: parseInt(mapPin.style.left, 10)
+    };
+  };
+
+  const reset = function () {
+    const mapPin = window.elements.mapPin;
+    processMove(initialCoordinates.left, initialCoordinates.top, mapPin);
+    setup();
   };
 
   window.mainPin = {
     setup,
+    reset,
     onActivationClick,
     onMove,
   };

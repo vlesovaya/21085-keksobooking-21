@@ -13,8 +13,11 @@
   }
 
   const removeFaded = function () {
-    const map = window.elements.map;
-    map.classList.remove(`map--faded`);
+    window.elements.map.classList.remove(`map--faded`);
+  };
+
+  const addFaded = function () {
+    window.elements.map.classList.add(`map--faded`);
   };
 
   const setupActivationClick = function () {
@@ -23,7 +26,16 @@
     window.mainPin.setup();
   };
 
+  const reset = function () {
+    addFaded();
+    window.card.hideCard();
+    window.mainPin.reset();
+    window.pins.removePins();
+    setupActivationClick();
+  };
+
   window.map = {
     setupActivationClick,
+    reset,
   };
 })();
