@@ -2,6 +2,7 @@
 
 (function () {
   const form = document.querySelector(`.ad-form`);
+  const resetFormButton = document.querySelector(`.ad-form__reset`);
   const addressInput = document.getElementById(`address`);
 
   const setAddressValue = function (value) {
@@ -102,6 +103,27 @@
     onChangeEvent(roomSelect.value);
   }
 
+  function sendForm(evt) {
+    evt.preventDefault();
+    const onSuccess = function () {
+      window.popups.showSuccess();
+      resetForm(evt);
+    };
+    const onError = function (error) {
+      window.popups.showError(error);
+    };
+    window.data.post(window.constants.postFormUrl, new FormData(form), onSuccess, onError);
+  }
+
+  function resetForm(evt) {
+    evt.preventDefault();
+    form.reset();
+    addValidation();
+    setAdFormsInteractionAvailability(false);
+    addDisabled();
+    window.map.reset();
+  }
+
   const addValidation = function () {
     const advHeadInput = document.getElementById(`title`);
     addInputValidation(advHeadInput);
@@ -123,6 +145,10 @@
     form.classList.remove(`ad-form--disabled`);
   };
 
+  const addDisabled = function () {
+    form.classList.add(`ad-form--disabled`);
+  };
+
   const setAdFormsInteractionAvailability = function (isAvailable) {
     const formElements = form.elements;
     for (let i = 0; i < formElements.length; ++i) {
@@ -130,10 +156,17 @@
     }
   };
 
+  const addFormProcessing = function () {
+    form.addEventListener(`submit`, sendForm);
+    resetFormButton.addEventListener(`click`, resetForm);
+  };
+
   window.form = {
     setAddressValue,
     addValidation,
     removeDisabled,
-    setAdFormsInteractionAvailability
+    addDisabled,
+    setAdFormsInteractionAvailability,
+    addFormProcessing,
   };
 })();

@@ -19,11 +19,11 @@
         window.card.updateCard(pinData);
       }
     });
-    mapElement.appendChild(pin);
+    mapElement.querySelector(`.map__pins`).appendChild(pin);
   }
 
   const addPins = function () {
-    const template = document.querySelector(`#pin`).content.querySelector(`button`);
+    const template = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
     const onSuccess = function (data) {
       const map = window.elements.map;
       for (let ad of data) {
@@ -36,7 +36,13 @@
     window.data.load(window.constants.dataUrl, onSuccess, onError);
   };
 
+  const removePins = function () {
+    const pins = document.querySelectorAll(`.map__pin:not(.map__pin--main)`);
+    pins.forEach((pin) => window.elements.map.querySelector(`.map__pins`).removeChild(pin));
+  };
+
   window.pins = {
     addPins,
+    removePins,
   };
 })();

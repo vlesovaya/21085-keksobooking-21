@@ -13,6 +13,10 @@
     return document.querySelector(`#error`).content.querySelector(`.error`);
   };
 
+  const successPopup = function () {
+    return document.querySelector(`#success`).content.querySelector(`.success`);
+  };
+
   const mapOverlay = function () {
     return document.querySelector(`.map__overlay`);
   };
@@ -24,5 +28,6 @@
     card,
     mapOverlay,
     errorPopup,
+    successPopup,
   };
 })();

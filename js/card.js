@@ -93,8 +93,13 @@
     card.classList.remove(`hidden`);
   };
 
+  const hideCard = function () {
+    closeCard(card);
+  };
+
   window.card = {
     openCard,
     updateCard,
+    hideCard,
   };
 })();

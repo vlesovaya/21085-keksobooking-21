@@ -1,10 +1,9 @@
 'use strict';
 
 (function () {
-  const load = function (url, onSuccess, onError) {
+  function keksRequest(onSuccess, onError) {
     let request = new XMLHttpRequest();
-
-    request.responseType = `json`;
+    request.timeout = 10000; // 10s
 
     request.addEventListener(`load`, function () {
       let error;
@@ -39,13 +38,25 @@
       onError(window.localization.localizeError(`error_timeout`) + request.timeout + `ms`);
     });
 
-    request.timeout = 10000; // 10s
+    return request;
+  }
 
+  const load = function (url, onSuccess, onError) {
+    let request = keksRequest(onSuccess, onError);
+    request.responseType = `json`;
     request.open(`GET`, url);
     request.send();
   };
 
+  const post = function (url, data, onSuccess, onError) {
+    let request = keksRequest(onSuccess, onError);
+    request.responseType = `json`;
+    request.open(`POST`, url);
+    request.send(data);
+  };
+
   window.data = {
     load,
+    post,
   };
 })();
