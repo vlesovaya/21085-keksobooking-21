@@ -21,6 +21,10 @@
     return document.querySelector(`.map__overlay`);
   };
 
+  const mapFilters = function () {
+    return map.querySelector(`.map__filters`);
+  };
+
   window.elements = {
     main,
     map,
@@ -29,5 +33,6 @@
     mapOverlay,
     errorPopup,
     successPopup,
+    mapFilters,
   };
 })();

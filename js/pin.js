@@ -25,8 +25,9 @@
   const addPins = function () {
     const template = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
     const onSuccess = function (data) {
+      const filteredData = window.filters.filterData(data);
       const map = window.elements.map;
-      for (let ad of data) {
+      for (let ad of filteredData) {
         addPin(ad, template, map);
       }
     };
