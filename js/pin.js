@@ -42,6 +42,11 @@
     pins.forEach((pin) => window.elements.map.querySelector(`.map__pins`).removeChild(pin));
   };
 
+  window.filters.addOnChangeFilterObserver(function () {
+    removePins();
+    addPins();
+  });
+
   window.pins = {
     addPins,
     removePins,

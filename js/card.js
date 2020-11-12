@@ -97,6 +97,10 @@
     closeCard(card);
   };
 
+  window.filters.addOnChangeFilterObserver(function () {
+    hideCard();
+  });
+
   window.card = {
     openCard,
     updateCard,
