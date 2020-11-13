@@ -6,8 +6,6 @@
   let moveEnabled = false;
   let isActive = false;
 
-  const PIN_TIP_HEIGHT = 15;
-
   let initialCoordinates = {
     top: 0,
     left: 0,
@@ -24,7 +22,7 @@
     const mapPin = window.elements.mapPin;
     const mapPinRect = mapPin.getBoundingClientRect();
     return {
-      height: mapPinRect.height + PIN_TIP_HEIGHT,
+      height: mapPinRect.height + window.constants.PIN_TIP_HEIGHT,
       width: mapPinRect.width,
     };
   }
@@ -41,7 +39,7 @@
   function setupClick() {
     const mapPin = window.elements.mapPin;
 
-    mapPin.addEventListener(`mousedown`, function (evt) {
+    mapPin.addEventListener(window.constants.EVENT.mousedown, function (evt) {
       if (evt.button !== 0) {
         return;
       }
@@ -81,15 +79,15 @@
         didMove();
         moveEnabled = false;
 
-        window.elements.map.removeEventListener(`mousemove`, onMouseMove);
-        window.elements.map.removeEventListener(`mouseup`, onMouseUp);
+        window.elements.map.removeEventListener(window.constants.EVENT.mousemove, onMouseMove);
+        window.elements.map.removeEventListener(window.constants.EVENT.mouseup, onMouseUp);
       };
 
-      window.elements.map.addEventListener(`mousemove`, onMouseMove);
-      window.elements.map.addEventListener(`mouseup`, onMouseUp);
+      window.elements.map.addEventListener(window.constants.EVENT.mousemove, onMouseMove);
+      window.elements.map.addEventListener(window.constants.EVENT.mouseup, onMouseUp);
     });
 
-    mapPin.addEventListener(`keydown`, function (evt) {
+    mapPin.addEventListener(window.constants.EVENT.keydown, function (evt) {
       if (evt.key !== `Enter`) {
         return;
       }
@@ -102,7 +100,7 @@
 
   function didMove() {
     const mapPin = window.elements.mapPin;
-    const overlay = window.elements.mapOverlay();
+    const overlay = window.elements.mapOverlay;
 
     const mapPinRect = mapPin.getBoundingClientRect();
     const overlayRect = overlay.getBoundingClientRect();
@@ -110,7 +108,7 @@
     const topPinPosition = Math.round(mapPinRect.top + mapPinRect.height - overlayRect.top);
 
     if (onMoveCallback !== null) {
-      onMoveCallback(leftPinPosition, topPinPosition, PIN_TIP_HEIGHT);
+      onMoveCallback(leftPinPosition, topPinPosition, window.constants.PIN_TIP_HEIGHT);
     }
   }
 
