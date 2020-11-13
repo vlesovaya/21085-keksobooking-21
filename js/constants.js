@@ -7,6 +7,7 @@
   const MAX_PINS_COUNT = 5;
   const PIN_TIP_HEIGHT = 15;
 
+
   const REQUEST = {
     get: `GET`,
     post: `POST`,
@@ -28,6 +29,7 @@
   };
 
   const TIMEOUT = 10000; // 10s
+  const DEBOUNCE_INTERVAL = 500; // 0,5s
 
   const ANY = `any`;
 
@@ -37,6 +39,7 @@
     MAX_PINS_COUNT,
     PIN_TIP_HEIGHT,
     TIMEOUT,
+    DEBOUNCE_INTERVAL,
     REQUEST,
     EVENT,
     ANY,

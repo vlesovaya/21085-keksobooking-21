@@ -79,9 +79,11 @@
     onChangeObservers.push(observer);
   };
 
-  window.elements.mapFilters.addEventListener(window.constants.EVENT.change, function () {
+  const onChangeFilter = window.utils.debounce(function (){
     onChangeObservers.forEach((observer) => observer());
   });
+
+  window.elements.mapFilters.addEventListener(window.constants.EVENT.change, onChangeFilter);
 
   window.filters = {
     filterData,
