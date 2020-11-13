@@ -23,12 +23,31 @@
     cardElement.classList.add(`hidden`);
   }
 
-  // Скрывает элемент без данных
+  // Скрывает текстовые поля без данных
   function verifyAndAddTextData(cardElement, selector, textData, dataMap) {
     if (textData !== null) {
       cardElement.querySelector(selector).textContent = dataMap;
     } else {
       cardElement.querySelector(selector).hidden = true;
+    }
+  }
+
+  // Скрывает фотографии без данных
+  function verifyAndAddPhotos(cardElement, photos) {
+    if (photos === null || photos.length === 0) {
+      cardElement.querySelector(`.popup__photos`).classList.add(`hidden`);
+    } else {
+      cardElement.querySelector(`.popup__photos`).classList.remove(`hidden`);
+      let photoElement = cardElement.querySelector(`.popup__photos`).querySelector(`.popup__photo`);
+      cardElement.querySelector(`.popup__photos`)
+        .querySelectorAll(`.popup__photo`)
+        .forEach((photo) => photo.remove());
+
+      for (let photo of photos) {
+        let newPhotoElement = photoElement.cloneNode(true);
+        newPhotoElement.src = photo;
+        cardElement.querySelector(`.popup__photos`).appendChild(newPhotoElement);
+      }
     }
   }
 
@@ -78,15 +97,9 @@
     ];
     fields.forEach((field) => verifyAndAddTextData(card, field.className, field.field, field.text));
 
-    let photoElement = card.querySelector(`.popup__photos`).querySelector(`.popup__photo`);
-    card.querySelector(`.popup__photos`).removeChild(photoElement);
-
-    for (let photo of cardData.offer.photos) {
-      let newPhotoElement = photoElement.cloneNode(true);
-      newPhotoElement.src = photo;
-      card.querySelector(`.popup__photos`).appendChild(newPhotoElement);
-    }
     card.querySelector(`.popup__avatar`).src = cardData.author.avatar;
+
+    verifyAndAddPhotos(card, cardData.offer.photos);
   };
 
   const openCard = function () {

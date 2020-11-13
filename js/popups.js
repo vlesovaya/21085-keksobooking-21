@@ -1,6 +1,11 @@
 'use strict';
 
 (function () {
+  function removePopup(popup, listenerFunction) {
+    window.elements.main.removeChild(popup);
+    document.removeEventListener(`keydown`, listenerFunction);
+  }
+
   const showError = function (error) {
     const main = window.elements.main;
     const errorPopup = window.elements.errorPopup().cloneNode(true);
@@ -10,18 +15,14 @@
 
     const errorButton = errorPopup.querySelector(`.error__button`);
 
-    const removePopup = function () {
-      main.removeChild(errorPopup);
-      document.removeEventListener(`keydown`, onEscKeydown);
-    };
     const onClick = function () {
       if (main.contains(errorButton)) {
-        removePopup();
+        removePopup(errorPopup, onEscKeydown);
       }
     };
     const onEscKeydown = function (evt) {
       if (evt.key === `Escape` && main.contains(errorButton)) {
-        removePopup();
+        removePopup(errorPopup, onEscKeydown);
       }
     };
 
@@ -35,18 +36,14 @@
     const main = window.elements.main;
     const successPopup = window.elements.successPopup().cloneNode(true);
 
-    const removePopup = function () {
-      main.removeChild(successPopup);
-      document.removeEventListener(`keydown`, onEscKeydown);
-    };
     const onClick = function () {
       if (main.contains(successPopup)) {
-        removePopup();
+        removePopup(successPopup, onEscKeydown);
       }
     };
     const onEscKeydown = function (evt) {
       if (evt.key === `Escape` && main.contains(successPopup)) {
-        removePopup();
+        removePopup(successPopup, onEscKeydown);
       }
     };
 
