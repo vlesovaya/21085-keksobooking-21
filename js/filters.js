@@ -28,7 +28,7 @@
     onChangeObservers.push(observer);
   };
 
-  window.elements.mapFilters().addEventListener(`change`, function () {
+  window.elements.mapFilters().addEventListener(window.constants.EVENT.change, function () {
     onChangeObservers.forEach((observer) => observer());
   });
 

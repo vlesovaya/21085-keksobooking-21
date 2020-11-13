@@ -3,9 +3,9 @@
 (function () {
   function keksRequest(onSuccess, onError) {
     let request = new XMLHttpRequest();
-    request.timeout = 10000; // 10s
+    request.timeout = window.constants.TIMEOUT;
 
-    request.addEventListener(`load`, function () {
+    request.addEventListener(window.constants.EVENT.load, function () {
       let error;
       switch (request.status) {
         case 200:
@@ -30,11 +30,11 @@
       }
     });
 
-    request.addEventListener(`error`, function () {
+    request.addEventListener(window.constants.EVENT.error, function () {
       onError(window.localization.localizeError(`error_connection`));
     });
 
-    request.addEventListener(`timeout`, function () {
+    request.addEventListener(window.constants.EVENT.timeout, function () {
       onError(window.localization.localizeError(`error_timeout`) + request.timeout + `ms`);
     });
 
@@ -43,15 +43,15 @@
 
   const load = function (url, onSuccess, onError) {
     let request = keksRequest(onSuccess, onError);
-    request.responseType = `json`;
-    request.open(`GET`, url);
+    request.responseType = window.constants.REQUEST.json;
+    request.open(window.constants.REQUEST.get, url);
     request.send();
   };
 
   const post = function (url, data, onSuccess, onError) {
     let request = keksRequest(onSuccess, onError);
-    request.responseType = `json`;
-    request.open(`POST`, url);
+    request.responseType = window.constants.REQUEST.json;
+    request.open(window.constants.REQUEST.post, url);
     request.send(data);
   };
 

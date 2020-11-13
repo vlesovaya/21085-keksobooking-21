@@ -9,11 +9,11 @@
     pin.style.top = pinData.location.y - PIN_HEIGHT / 2 + `px`;
     pin.querySelector(`img`).src = pinData.author.avatar;
     pin.querySelector(`img`).alt = pinData.offer.title;
-    pin.addEventListener(`click`, function () {
+    pin.addEventListener(window.constants.EVENT.click, function () {
       window.card.openCard();
       window.card.updateCard(pinData);
     });
-    pin.addEventListener(`keydown`, function (evt) {
+    pin.addEventListener(window.constants.EVENT.keydown, function (evt) {
       if (evt.key === `Enter`) {
         window.card.openCard();
         window.card.updateCard(pinData);

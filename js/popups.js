@@ -3,7 +3,7 @@
 (function () {
   function removePopup(popup, listenerFunction) {
     window.elements.main.removeChild(popup);
-    document.removeEventListener(`keydown`, listenerFunction);
+    document.removeEventListener(window.constants.EVENT.keydown, listenerFunction);
   }
 
   const showError = function (error) {
@@ -26,8 +26,8 @@
       }
     };
 
-    errorButton.addEventListener(`click`, onClick);
-    document.addEventListener(`keydown`, onEscKeydown);
+    errorButton.addEventListener(window.constants.EVENT.click, onClick);
+    document.addEventListener(window.constants.EVENT.keydown, onEscKeydown);
 
     main.appendChild(errorPopup);
   };
@@ -47,8 +47,8 @@
       }
     };
 
-    successPopup.addEventListener(`click`, onClick);
-    document.addEventListener(`keydown`, onEscKeydown);
+    successPopup.addEventListener(window.constants.EVENT.click, onClick);
+    document.addEventListener(window.constants.EVENT.keydown, onEscKeydown);
 
     main.appendChild(successPopup);
   };

@@ -10,7 +10,7 @@
   };
 
   function addInputValidation(input) {
-    input.addEventListener(`invalid`, function () {
+    input.addEventListener(window.constants.EVENT.invalid, function () {
       if (input.validity.tooShort) {
         input.setCustomValidity(`Заголовок должен состоять минимум из 30-ти символов`);
       } else if (input.validity.tooLong) {
@@ -27,7 +27,7 @@
     priceInput.max = maxValue;
     priceInput.min = minValue;
     priceInput.placeholder = minValue;
-    priceInput.addEventListener(`change`, function () {
+    priceInput.addEventListener(window.constants.EVENT.change, function () {
       if (priceInput.value > maxValue) {
         priceInput.value = maxValue;
       }
@@ -47,7 +47,7 @@
       const minValue = checkTypeMap.get(newTypeValue);
       priceInputValidation(priceInput, 1000000, minValue);
     };
-    typeOfHousing.addEventListener(`change`, (event) => {
+    typeOfHousing.addEventListener(window.constants.EVENT.change, (event) => {
       const type = event.target.value;
       onChangeEvent(type);
     });
@@ -71,7 +71,7 @@
         }
       }
     };
-    checkInSelect.addEventListener(`change`, (event) => {
+    checkInSelect.addEventListener(window.constants.EVENT.change, (event) => {
       const times = event.target.value;
       onChangeEvent(times);
     });
@@ -96,7 +96,7 @@
         }
       }
     };
-    roomSelect.addEventListener(`change`, (event) => {
+    roomSelect.addEventListener(window.constants.EVENT.change, (event) => {
       const rooms = event.target.value;
       onChangeEvent(rooms);
     });
@@ -157,8 +157,8 @@
   };
 
   const addFormProcessing = function () {
-    form.addEventListener(`submit`, sendForm);
-    resetFormButton.addEventListener(`click`, resetForm);
+    form.addEventListener(window.constants.EVENT.submit, sendForm);
+    resetFormButton.addEventListener(window.constants.EVENT.click, resetForm);
   };
 
   window.form = {

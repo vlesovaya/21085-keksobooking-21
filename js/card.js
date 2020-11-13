@@ -6,8 +6,8 @@
     const card = cardElement.cloneNode(true);
     closeCard(card);
     const closeButton = card.querySelector(`.popup__close`);
-    closeButton.addEventListener(`click`, () => closeCard(card));
-    closeButton.addEventListener(`keydown`, function (evt) {
+    closeButton.addEventListener(window.constants.EVENT.click, () => closeCard(card));
+    closeButton.addEventListener(window.constants.EVENT.keydown, function (evt) {
       if (evt.key === `Enter`) {
         closeCard(card);
       }
