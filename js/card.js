@@ -2,7 +2,7 @@
 
 (function () {
   const createCard = function () {
-    const cardElement = window.elements.card();
+    const cardElement = window.elements.card;
     const card = cardElement.cloneNode(true);
     closeCard(card);
     const closeButton = card.querySelector(`.popup__close`);

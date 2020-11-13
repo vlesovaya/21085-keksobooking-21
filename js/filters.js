@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  const filterType = window.elements.mapFilters().querySelector(`#housing-type`);
+  const filterType = window.elements.mapFilters.querySelector(`#housing-type`);
   /* Future filters
   const filterPrice = window.elements.mapFilters().querySelector(`#housing-price`);
   const filterRooms = window.elements.mapFilters().querySelector(`#housing-rooms`);
@@ -28,7 +28,7 @@
     onChangeObservers.push(observer);
   };
 
-  window.elements.mapFilters().addEventListener(window.constants.EVENT.change, function () {
+  window.elements.mapFilters.addEventListener(window.constants.EVENT.change, function () {
     onChangeObservers.forEach((observer) => observer());
   });
 

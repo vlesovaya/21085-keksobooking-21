@@ -5,25 +5,16 @@
   const map = document.querySelector(`.map`);
   const mapPin = document.querySelector(`.map__pin--main`);
 
-  const card = function () {
-    return document.querySelector(`#card`).content.querySelector(`article`);
-  };
+  const card = document.querySelector(`#card`).content.querySelector(`article`);
 
-  const errorPopup = function () {
-    return document.querySelector(`#error`).content.querySelector(`.error`);
-  };
+  const errorPopup = document.querySelector(`#error`).content.querySelector(`.error`);
 
-  const successPopup = function () {
-    return document.querySelector(`#success`).content.querySelector(`.success`);
-  };
+  const successPopup = document.querySelector(`#success`).content.querySelector(`.success`);
 
-  const mapOverlay = function () {
-    return document.querySelector(`.map__overlay`);
-  };
+  const mapOverlay = document.querySelector(`.map__overlay`);
 
-  const mapFilters = function () {
-    return map.querySelector(`.map__filters`);
-  };
+  const mapFilters = map.querySelector(`.map__filters`);
+
 
   window.elements = {
     main,
