@@ -100,7 +100,7 @@
 
   function didMove() {
     const mapPin = window.elements.mapPin;
-    const overlay = window.elements.mapOverlay();
+    const overlay = window.elements.mapOverlay;
 
     const mapPinRect = mapPin.getBoundingClientRect();
     const overlayRect = overlay.getBoundingClientRect();

@@ -8,7 +8,7 @@
 
   const showError = function (error) {
     const main = window.elements.main;
-    const errorPopup = window.elements.errorPopup().cloneNode(true);
+    const errorPopup = window.elements.errorPopup.cloneNode(true);
 
     const errorText = errorPopup.querySelector(`.error__message`);
     errorText.textContent = error;
@@ -34,7 +34,7 @@
 
   const showSuccess = function () {
     const main = window.elements.main;
-    const successPopup = window.elements.successPopup().cloneNode(true);
+    const successPopup = window.elements.successPopup.cloneNode(true);
 
     const onClick = function () {
       if (main.contains(successPopup)) {
