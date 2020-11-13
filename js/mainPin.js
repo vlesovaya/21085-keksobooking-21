@@ -128,7 +128,7 @@
     const mapPin = window.elements.mapPin;
     initialCoordinates = {
       top: parseInt(mapPin.style.top, 10),
-      left: parseInt(mapPin.style.left, 10)
+      left: parseInt(mapPin.style.left, 10),
     };
   };
 

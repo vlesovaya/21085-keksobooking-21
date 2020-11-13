@@ -16,21 +16,21 @@
       return true;
     }
     return filterType.value === ad.offer.type;
-  };
+  }
 
   function areRoomsApplicable(ad) {
     if (filterRooms.value === window.constants.ANY) {
       return true;
     }
     return parseInt(filterRooms.value, 10) === ad.offer.rooms;
-  };
+  }
 
   function areGuestsApplicable(ad) {
     if (filterGuests.value === window.constants.ANY) {
       return true;
     }
     return parseInt(filterGuests.value, 10) <= ad.offer.guests;
-  };
+  }
 
   function isPriceApplicable(ad) {
     if (filterPrice.value === window.constants.ANY) {
@@ -54,14 +54,14 @@
 
     const filterRange = ranges[filterPrice.value];
     return filterRange.min <= ad.offer.price && filterRange.max >= ad.offer.price;
-  };
+  }
 
   function areFeaturesApplicable(ad) {
     const enabledFeatures = Array.from(filterFeatures());
     return enabledFeatures.every((feature) => {
       return ad.offer.features.includes(feature.value);
     });
-  };
+  }
 
   const isAdApplicable = function (ad) {
     return isTypeApplicable(ad)
@@ -79,7 +79,7 @@
     onChangeObservers.push(observer);
   };
 
-  const onChangeFilter = window.utils.debounce(function (){
+  const onChangeFilter = window.utils.debounce(function () {
     onChangeObservers.forEach((observer) => observer());
   });
 
