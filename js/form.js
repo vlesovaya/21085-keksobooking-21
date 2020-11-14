@@ -1,16 +1,16 @@
 'use strict';
 
-(function () {
+(() => {
   const form = document.querySelector(`.ad-form`);
   const resetFormButton = document.querySelector(`.ad-form__reset`);
   const addressInput = document.getElementById(`address`);
 
-  const setAddressValue = function (value) {
+  const setAddressValue = (value) => {
     addressInput.value = value;
   };
 
   function addInputValidation(input) {
-    input.addEventListener(window.constants.EVENT.invalid, function () {
+    input.addEventListener(window.constants.EVENT.invalid, () => {
       if (input.validity.tooShort) {
         input.setCustomValidity(`Заголовок должен состоять минимум из 30-ти символов`);
       } else if (input.validity.tooLong) {
@@ -27,7 +27,7 @@
     priceInput.max = maxValue;
     priceInput.min = minValue;
     priceInput.placeholder = minValue;
-    priceInput.addEventListener(window.constants.EVENT.change, function () {
+    priceInput.addEventListener(window.constants.EVENT.change, () => {
       if (priceInput.value > maxValue) {
         priceInput.value = maxValue;
       }
@@ -38,7 +38,7 @@
   }
 
   function addTypeValidation(typeOfHousing, priceInput) {
-    const onChangeEvent = function (newTypeValue) {
+    const onChangeEvent = (newTypeValue) => {
       const checkTypeMap = new Map();
       checkTypeMap.set(`bungalow`, 0);
       checkTypeMap.set(`flat`, 1000);
@@ -55,7 +55,7 @@
   }
 
   function addTimeValidation(checkInSelect, checkOutSelect) {
-    const onChangeEvent = function (newTimesValue) {
+    const onChangeEvent = (newTimesValue) => {
       const checkTimeMap = new Map();
       checkTimeMap.set(`12:00`, [`12:00`]);
       checkTimeMap.set(`13:00`, [`13:00`]);
@@ -79,7 +79,7 @@
   }
 
   function addSelectsValidation(capacitySelect, roomSelect) {
-    const onChangeEvent = function (newRoomsValue) {
+    const onChangeEvent = (newRoomsValue) => {
       const roomCapacityMap = new Map();
       roomCapacityMap.set(`1`, [`1`]);
       roomCapacityMap.set(`2`, [`2`, `1`]);
@@ -105,11 +105,11 @@
 
   function sendForm(evt) {
     evt.preventDefault();
-    const onSuccess = function () {
+    const onSuccess = () => {
       window.popups.showSuccess();
       resetForm(evt);
     };
-    const onError = function (error) {
+    const onError = (error) => {
       window.popups.showError(error);
     };
     window.data.post(window.constants.postFormUrl, new FormData(form), onSuccess, onError);
@@ -124,7 +124,7 @@
     window.map.reset();
   }
 
-  const addValidation = function () {
+  const addValidation = () => {
     const advHeadInput = document.getElementById(`title`);
     addInputValidation(advHeadInput);
 
@@ -141,22 +141,22 @@
     addTypeValidation(advTypeOfHouse, advPrice);
   };
 
-  const removeDisabled = function () {
+  const removeDisabled = () => {
     form.classList.remove(`ad-form--disabled`);
   };
 
-  const addDisabled = function () {
+  const addDisabled = () => {
     form.classList.add(`ad-form--disabled`);
   };
 
-  const setAdFormsInteractionAvailability = function (isAvailable) {
+  const setAdFormsInteractionAvailability = (isAvailable) => {
     const formElements = form.elements;
     for (let i = 0; i < formElements.length; ++i) {
       formElements[i].disabled = !isAvailable;
     }
   };
 
-  const addFormProcessing = function () {
+  const addFormProcessing = () => {
     form.addEventListener(window.constants.EVENT.submit, sendForm);
     resetFormButton.addEventListener(window.constants.EVENT.click, resetForm);
   };

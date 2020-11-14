@@ -1,13 +1,11 @@
 'use strict';
 
-(function () {
+(() => {
   const filterType = window.elements.mapFilters.querySelector(`#housing-type`);
   const filterPrice = window.elements.mapFilters.querySelector(`#housing-price`);
   const filterRooms = window.elements.mapFilters.querySelector(`#housing-rooms`);
   const filterGuests = window.elements.mapFilters.querySelector(`#housing-guests`);
-  const filterFeatures = function () {
-    return window.elements.mapFilters.querySelectorAll(`.map__checkbox:checked`);
-  };
+  const filterFeatures = () => window.elements.mapFilters.querySelectorAll(`.map__checkbox:checked`);
 
   let onChangeObservers = [];
 
@@ -63,23 +61,19 @@
     });
   }
 
-  const isAdApplicable = function (ad) {
-    return isTypeApplicable(ad)
-      && isPriceApplicable(ad)
-      && areRoomsApplicable(ad)
-      && areGuestsApplicable(ad)
-      && areFeaturesApplicable(ad);
-  };
+  const isAdApplicable = (ad) => isTypeApplicable(ad)
+    && isPriceApplicable(ad)
+    && areRoomsApplicable(ad)
+    && areGuestsApplicable(ad)
+    && areFeaturesApplicable(ad);
 
-  const filterData = function (data) {
-    return data.filter(isAdApplicable).slice(0, window.constants.MAX_PINS_COUNT);
-  };
+  const filterData = (data) => data.filter(isAdApplicable).slice(0, window.constants.MAX_PINS_COUNT);
 
-  const addOnChangeFilterObserver = function (observer) {
+  const addOnChangeFilterObserver = (observer) => {
     onChangeObservers.push(observer);
   };
 
-  const onChangeFilter = window.utils.debounce(function () {
+  const onChangeFilter = window.utils.debounce(() => {
     onChangeObservers.forEach((observer) => observer());
   });
 

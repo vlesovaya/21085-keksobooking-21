@@ -1,6 +1,6 @@
 'use strict';
 
-(function () {
+(() => {
   const main = document.querySelector(`main`);
   const map = document.querySelector(`.map`);
   const mapPin = document.querySelector(`.map__pin--main`);

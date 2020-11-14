@@ -1,13 +1,13 @@
 'use strict';
 
-(function () {
-  const createCard = function () {
+(() => {
+  const createCard = () => {
     const cardElement = window.elements.card;
     const card = cardElement.cloneNode(true);
     closeCard(card);
     const closeButton = card.querySelector(`.popup__close`);
     closeButton.addEventListener(window.constants.EVENT.click, () => closeCard(card));
-    closeButton.addEventListener(window.constants.EVENT.keydown, function (evt) {
+    closeButton.addEventListener(window.constants.EVENT.keydown, (evt) => {
       if (evt.key === `Enter`) {
         closeCard(card);
       }
@@ -51,7 +51,7 @@
   }
 
   // Обновляет данные в карточке
-  const updateCard = function (cardData) {
+  const updateCard = (cardData) => {
     const fields = [
       {
         className: `.popup__title`,
@@ -101,15 +101,15 @@
     verifyAndAddPhotos(card, cardData.offer.photos);
   };
 
-  const openCard = function () {
+  const openCard = () => {
     card.classList.remove(`hidden`);
   };
 
-  const hideCard = function () {
+  const hideCard = () => {
     closeCard(card);
   };
 
-  window.filters.addOnChangeFilterObserver(function () {
+  window.filters.addOnChangeFilterObserver(() => {
     hideCard();
   });
 
