@@ -1,11 +1,11 @@
 'use strict';
 
-(function () {
+(() => {
   function keksRequest(onSuccess, onError) {
     let request = new XMLHttpRequest();
     request.timeout = window.constants.TIMEOUT;
 
-    request.addEventListener(window.constants.EVENT.load, function () {
+    request.addEventListener(window.constants.EVENT.load, () => {
       let error;
       switch (request.status) {
         case 200:
@@ -30,25 +30,25 @@
       }
     });
 
-    request.addEventListener(window.constants.EVENT.error, function () {
+    request.addEventListener(window.constants.EVENT.error, () => {
       onError(window.localization.localizeError(`error_connection`));
     });
 
-    request.addEventListener(window.constants.EVENT.timeout, function () {
+    request.addEventListener(window.constants.EVENT.timeout, () => {
       onError(window.localization.localizeError(`error_timeout`) + request.timeout + `ms`);
     });
 
     return request;
   }
 
-  const load = function (url, onSuccess, onError) {
+  const load = (url, onSuccess, onError) => {
     let request = keksRequest(onSuccess, onError);
     request.responseType = window.constants.REQUEST.json;
     request.open(window.constants.REQUEST.get, url);
     request.send();
   };
 
-  const post = function (url, data, onSuccess, onError) {
+  const post = (url, data, onSuccess, onError) => {
     let request = keksRequest(onSuccess, onError);
     request.responseType = window.constants.REQUEST.json;
     request.open(window.constants.REQUEST.post, url);

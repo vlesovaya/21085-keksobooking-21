@@ -1,6 +1,6 @@
 'use strict';
 
-(function () {
+(() => {
   let onActivationClickCallback;
   let onMoveCallback;
   let moveEnabled = false;
@@ -39,7 +39,7 @@
   function setupClick() {
     const mapPin = window.elements.mapPin;
 
-    mapPin.addEventListener(window.constants.EVENT.mousedown, function (evt) {
+    mapPin.addEventListener(window.constants.EVENT.mousedown, (evt) => {
       if (evt.button !== 0) {
         return;
       }
@@ -59,7 +59,7 @@
       const pinLeft = parseInt(mapPin.style.left, 10);
       const pinTop = parseInt(mapPin.style.top, 10);
 
-      const onMouseMove = function (moveEvt) {
+      const onMouseMove = (moveEvt) => {
         if (evt.button !== 0 || moveEnabled === false) {
           return;
         }
@@ -72,7 +72,7 @@
         processMove(currentX, currentY, mapPin);
       };
 
-      const onMouseUp = function () {
+      const onMouseUp = () => {
         if (evt.button !== 0 || moveEnabled === false) {
           return;
         }
@@ -87,7 +87,7 @@
       window.elements.map.addEventListener(window.constants.EVENT.mouseup, onMouseUp);
     });
 
-    mapPin.addEventListener(window.constants.EVENT.keydown, function (evt) {
+    mapPin.addEventListener(window.constants.EVENT.keydown, (evt) => {
       if (evt.key !== `Enter`) {
         return;
       }
@@ -112,15 +112,15 @@
     }
   }
 
-  const onActivationClick = function (callback) {
+  const onActivationClick = (callback) => {
     onActivationClickCallback = callback;
   };
 
-  const onMove = function (callback) {
+  const onMove = (callback) => {
     onMoveCallback = callback;
   };
 
-  const setup = function () {
+  const setup = () => {
     isActive = false;
     moveEnabled = false;
     setupClick();
@@ -132,7 +132,7 @@
     };
   };
 
-  const reset = function () {
+  const reset = () => {
     const mapPin = window.elements.mapPin;
     processMove(initialCoordinates.left, initialCoordinates.top, mapPin);
     setup();

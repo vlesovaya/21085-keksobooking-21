@@ -1,6 +1,6 @@
 'use strict';
 
-(function () {
+(() => {
   function onActivationClick() {
     removeFaded();
     window.form.removeDisabled();
@@ -12,21 +12,21 @@
     window.form.setAddressValue(leftPinPosition + `, ` + (topPinPosition + tipHeight));
   }
 
-  const removeFaded = function () {
+  const removeFaded = () => {
     window.elements.map.classList.remove(`map--faded`);
   };
 
-  const addFaded = function () {
+  const addFaded = () => {
     window.elements.map.classList.add(`map--faded`);
   };
 
-  const setupActivationClick = function () {
+  const setupActivationClick = () => {
     window.mainPin.onMove(onMove);
     window.mainPin.onActivationClick(onActivationClick);
     window.mainPin.setup();
   };
 
-  const reset = function () {
+  const reset = () => {
     addFaded();
     window.card.hideCard();
     window.mainPin.reset();

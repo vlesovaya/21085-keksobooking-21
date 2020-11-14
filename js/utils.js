@@ -1,7 +1,7 @@
 'use strict';
 
-(function () {
-  const debounce = function (callback) {
+(() => {
+  const debounce = (callback) => {
     let lastTimeout = null;
 
     return (parameters) => {
