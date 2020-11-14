@@ -6,7 +6,8 @@
 
   const MAX_PINS_COUNT = 5;
   const PIN_TIP_HEIGHT = 15;
-
+  const PIN_WIDTH = 40;
+  const PIN_HEIGHT = 40;
 
   const REQUEST = {
     get: `GET`,
@@ -38,6 +39,8 @@
     postFormUrl,
     MAX_PINS_COUNT,
     PIN_TIP_HEIGHT,
+    PIN_WIDTH,
+    PIN_HEIGHT,
     TIMEOUT,
     DEBOUNCE_INTERVAL,
     REQUEST,

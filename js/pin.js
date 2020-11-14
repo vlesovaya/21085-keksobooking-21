@@ -6,10 +6,8 @@
 
   function addPin(pinData, template, mapElement) {
     const pin = template.cloneNode(true);
-    const PIN_WIDTH = 40;
-    const PIN_HEIGHT = 40;
-    pin.style.left = pinData.location.x + PIN_WIDTH / 2 + `px`;
-    pin.style.top = pinData.location.y - PIN_HEIGHT / 2 + `px`;
+    pin.style.left = pinData.location.x + window.constants.PIN_WIDTH / 2 + `px`;
+    pin.style.top = pinData.location.y - window.constants.PIN_HEIGHT / 2 + `px`;
     pin.querySelector(`img`).src = pinData.author.avatar;
     pin.querySelector(`img`).alt = pinData.offer.title;
     pin.addEventListener(window.constants.EVENT.click, () => {
