@@ -25,12 +25,12 @@
     mapElement.querySelector(`.map__pins`).appendChild(pin);
   }
 
-  const disableSelects = () => {
-    [...selects, ...features].forEach(element => element.setAttribute('disabled', true))
-  }
-  const enableSelects = () => {
-    [...selects, ...features].forEach(element => element.removeAttribute('disabled'))
-  }
+  const disableSelects = function () {
+    [...selects, ...features].forEach((element) => element.setAttribute('disabled', true));
+  };
+  const enableSelects = function () {
+    [...selects, ...features].forEach((element) => element.removeAttribute('disabled'));
+  };
 
   const addPins = function () {
     const template = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
