@@ -7,7 +7,7 @@
   const filterGuests = window.elements.mapFilters.querySelector(`#housing-guests`);
   const filterFeatures = () => window.elements.mapFilters.querySelectorAll(`.map__checkbox:checked`);
   const selects = window.elements.mapFilters.querySelectorAll(`.map__filter`);
-  const features = window.elements.mapFilters.querySelectorAll(`.map__feature`);
+  const features = window.elements.mapFilters.querySelectorAll(`.map__features`);
 
   let onChangeObservers = [];
 
