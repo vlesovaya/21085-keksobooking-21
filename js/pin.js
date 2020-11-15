@@ -1,9 +1,6 @@
 'use strict';
 
 (() => {
-  const selects = window.elements.mapFilters.querySelectorAll(`.map__filter`);
-  const features = window.elements.mapFilters.querySelectorAll(`.map__feature`);
-
   const addPin = (pinData, template, mapElement) => {
     const pin = template.cloneNode(true);
     pin.style.left = pinData.location.x + window.constants.PIN_WIDTH / 2 + `px`;
@@ -23,17 +20,10 @@
     mapElement.querySelector(`.map__pins`).appendChild(pin);
   };
 
-  const disableSelects = () => {
-    [...selects, ...features].forEach((element) => element.setAttribute(`disabled`, true));
-  };
-  const enableSelects = () => {
-    [...selects, ...features].forEach((element) => element.removeAttribute(`disabled`));
-  };
-
   const add = () => {
     const template = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
     const onSuccess = (data) => {
-      enableSelects();
+      window.filters.enable();
       const filteredData = window.filters.filterData(data);
       const map = window.elements.map;
       for (let ad of filteredData) {
@@ -42,7 +32,7 @@
     };
     const onError = (error) => {
       window.popups.showError(error);
-      disableSelects();
+      window.filters.disable();
     };
     window.data.load(window.constants.DATA_URL, onSuccess, onError);
   };

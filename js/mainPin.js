@@ -58,10 +58,6 @@
         return;
       }
 
-      if (isActive) {
-        moveEnabled = true;
-      }
-
       if (onActivationClickCallback !== null && !isActive) {
         isActive = true;
         onActivationClickCallback();
@@ -72,6 +68,8 @@
 
       const pinLeft = parseInt(mapPin.style.left, 10);
       const pinTop = parseInt(mapPin.style.top, 10);
+
+      moveEnabled = true;
 
       const onMouseMove = (moveEvt) => {
         if (evt.button !== 0 || moveEnabled === false) {

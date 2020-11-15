@@ -6,8 +6,17 @@
   const filterRooms = window.elements.mapFilters.querySelector(`#housing-rooms`);
   const filterGuests = window.elements.mapFilters.querySelector(`#housing-guests`);
   const filterFeatures = () => window.elements.mapFilters.querySelectorAll(`.map__checkbox:checked`);
+  const selects = window.elements.mapFilters.querySelectorAll(`.map__filter`);
+  const features = window.elements.mapFilters.querySelectorAll(`.map__feature`);
 
   let onChangeObservers = [];
+
+  const disable = () => {
+    [...selects, ...features].forEach((element) => element.setAttribute(`disabled`, true));
+  };
+  const enable = () => {
+    [...selects, ...features].forEach((element) => element.removeAttribute(`disabled`));
+  };
 
   const isTypeApplicable = (ad) => {
     if (filterType.value === window.constants.ANY) {
@@ -78,9 +87,12 @@
   });
 
   window.elements.mapFilters.addEventListener(window.constants.EVENT.change, onChangeFilter);
+  disable();
 
   window.filters = {
     filterData,
     addOnChangeFilterObserver,
+    disable,
+    enable
   };
 })();

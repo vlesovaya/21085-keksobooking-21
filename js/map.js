@@ -31,6 +31,7 @@
     window.card.hide();
     window.mainPin.reset();
     window.pins.remove();
+    window.filters.disable();
     setupActivationClick();
   };
 
