@@ -9,28 +9,28 @@
 
   let onChangeObservers = [];
 
-  function isTypeApplicable(ad) {
+  const isTypeApplicable = (ad) => {
     if (filterType.value === window.constants.ANY) {
       return true;
     }
     return filterType.value === ad.offer.type;
-  }
+  };
 
-  function areRoomsApplicable(ad) {
+  const areRoomsApplicable = (ad) => {
     if (filterRooms.value === window.constants.ANY) {
       return true;
     }
     return parseInt(filterRooms.value, 10) === ad.offer.rooms;
-  }
+  };
 
-  function areGuestsApplicable(ad) {
+  const areGuestsApplicable = (ad) => {
     if (filterGuests.value === window.constants.ANY) {
       return true;
     }
     return parseInt(filterGuests.value, 10) <= ad.offer.guests;
-  }
+  };
 
-  function isPriceApplicable(ad) {
+  const isPriceApplicable = (ad) => {
     if (filterPrice.value === window.constants.ANY) {
       return true;
     }
@@ -52,14 +52,14 @@
 
     const filterRange = ranges[filterPrice.value];
     return filterRange.min <= ad.offer.price && filterRange.max >= ad.offer.price;
-  }
+  };
 
-  function areFeaturesApplicable(ad) {
+  const areFeaturesApplicable = (ad) => {
     const enabledFeatures = Array.from(filterFeatures());
     return enabledFeatures.every((feature) => {
       return ad.offer.features.includes(feature.value);
     });
-  }
+  };
 
   const isAdApplicable = (ad) => isTypeApplicable(ad)
     && isPriceApplicable(ad)

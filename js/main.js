@@ -1,6 +1,6 @@
 'use strict';
 
-window.form.addFormProcessing();
-window.form.setAdFormsInteractionAvailability(false);
+window.form.addProcessing();
+window.form.setInteractionAvailability(false);
 window.map.setupActivationClick();
 window.form.addValidation();

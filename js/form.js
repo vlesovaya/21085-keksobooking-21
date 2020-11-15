@@ -9,7 +9,7 @@
     addressInput.value = value;
   };
 
-  function addInputValidation(input) {
+  const addInputValidation = (input) => {
     input.addEventListener(window.constants.EVENT.invalid, () => {
       if (input.validity.tooShort) {
         input.setCustomValidity(`Заголовок должен состоять минимум из 30-ти символов`);
@@ -21,9 +21,9 @@
         input.setCustomValidity(``);
       }
     });
-  }
+  };
 
-  function priceInputValidation(priceInput, maxValue, minValue) {
+  const priceInputValidation = (priceInput, maxValue, minValue) => {
     priceInput.max = maxValue;
     priceInput.min = minValue;
     priceInput.placeholder = minValue;
@@ -35,9 +35,9 @@
         priceInput.value = minValue;
       }
     });
-  }
+  };
 
-  function addTypeValidation(typeOfHousing, priceInput) {
+  const addTypeValidation = (typeOfHousing, priceInput) => {
     const onChangeEvent = (newTypeValue) => {
       const checkTypeMap = new Map();
       checkTypeMap.set(`bungalow`, 0);
@@ -52,9 +52,9 @@
       onChangeEvent(type);
     });
     onChangeEvent(typeOfHousing.value);
-  }
+  };
 
-  function addTimeValidation(checkInSelect, checkOutSelect) {
+  const addTimeValidation = (checkInSelect, checkOutSelect) => {
     const onChangeEvent = (newTimesValue) => {
       const checkTimeMap = new Map();
       checkTimeMap.set(`12:00`, [`12:00`]);
@@ -76,9 +76,9 @@
       onChangeEvent(times);
     });
     onChangeEvent(checkOutSelect.value);
-  }
+  };
 
-  function addSelectsValidation(capacitySelect, roomSelect) {
+  const addSelectsValidation = (capacitySelect, roomSelect) => {
     const onChangeEvent = (newRoomsValue) => {
       const roomCapacityMap = new Map();
       roomCapacityMap.set(`1`, [`1`]);
@@ -101,9 +101,18 @@
       onChangeEvent(rooms);
     });
     onChangeEvent(roomSelect.value);
-  }
+  };
 
-  function sendForm(evt) {
+  const resetForm = (evt) => {
+    evt.preventDefault();
+    form.reset();
+    addValidation();
+    setInteractionAvailability(false);
+    addDisabled();
+    window.map.reset();
+  };
+
+  const sendForm = (evt) => {
     evt.preventDefault();
     const onSuccess = () => {
       window.popups.showSuccess();
@@ -112,17 +121,8 @@
     const onError = (error) => {
       window.popups.showError(error);
     };
-    window.data.post(window.constants.postFormUrl, new FormData(form), onSuccess, onError);
-  }
-
-  function resetForm(evt) {
-    evt.preventDefault();
-    form.reset();
-    addValidation();
-    setAdFormsInteractionAvailability(false);
-    addDisabled();
-    window.map.reset();
-  }
+    window.data.post(window.constants.POST_FORM_URL, new FormData(form), onSuccess, onError);
+  };
 
   const addValidation = () => {
     const advHeadInput = document.getElementById(`title`);
@@ -149,14 +149,14 @@
     form.classList.add(`ad-form--disabled`);
   };
 
-  const setAdFormsInteractionAvailability = (isAvailable) => {
+  const setInteractionAvailability = (isAvailable) => {
     const formElements = form.elements;
     for (let i = 0; i < formElements.length; ++i) {
       formElements[i].disabled = !isAvailable;
     }
   };
 
-  const addFormProcessing = () => {
+  const addProcessing = () => {
     form.addEventListener(window.constants.EVENT.submit, sendForm);
     resetFormButton.addEventListener(window.constants.EVENT.click, resetForm);
   };
@@ -166,7 +166,7 @@
     addValidation,
     removeDisabled,
     addDisabled,
-    setAdFormsInteractionAvailability,
-    addFormProcessing,
+    setInteractionAvailability,
+    addProcessing,
   };
 })();

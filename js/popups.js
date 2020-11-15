@@ -1,10 +1,10 @@
 'use strict';
 
 (() => {
-  function removePopup(popup, listenerFunction) {
+  const removePopup = (popup, listenerFunction) => {
     window.elements.main.removeChild(popup);
     document.removeEventListener(window.constants.EVENT.keydown, listenerFunction);
-  }
+  };
 
   const showError = (error) => {
     const main = window.elements.main;

@@ -11,6 +11,15 @@
     left: 0,
   };
 
+  const getPinSize = () => {
+    const mapPin = window.elements.mapPin;
+    const mapPinRect = mapPin.getBoundingClientRect();
+    return {
+      height: mapPinRect.height + window.constants.PIN_TIP_HEIGHT,
+      width: mapPinRect.width,
+    };
+  };
+
   const MovementLimitations = {
     top: 130,
     bottom: 630 - getPinSize().height,
@@ -18,25 +27,30 @@
     right: 1200 - getPinSize().width,
   };
 
-  function getPinSize() {
-    const mapPin = window.elements.mapPin;
-    const mapPinRect = mapPin.getBoundingClientRect();
-    return {
-      height: mapPinRect.height + window.constants.PIN_TIP_HEIGHT,
-      width: mapPinRect.width,
-    };
-  }
-
-  function processMove(newX, newY, mapPin) {
+  const processMove = (newX, newY, mapPin) => {
     if (newX < MovementLimitations.right && newX > MovementLimitations.left) {
       mapPin.style.left = newX + `px`;
     }
     if (newY < MovementLimitations.bottom && newY > MovementLimitations.top) {
       mapPin.style.top = newY + `px`;
     }
-  }
+  };
 
-  function setupClick() {
+  const didMove = () => {
+    const mapPin = window.elements.mapPin;
+    const overlay = window.elements.mapOverlay;
+
+    const mapPinRect = mapPin.getBoundingClientRect();
+    const overlayRect = overlay.getBoundingClientRect();
+    const leftPinPosition = Math.round((mapPinRect.width / 2) + mapPinRect.left - overlayRect.left);
+    const topPinPosition = Math.round(mapPinRect.top + mapPinRect.height - overlayRect.top);
+
+    if (onMoveCallback !== null) {
+      onMoveCallback(leftPinPosition, topPinPosition, window.constants.PIN_TIP_HEIGHT);
+    }
+  };
+
+  const setupClick = () => {
     const mapPin = window.elements.mapPin;
 
     mapPin.addEventListener(window.constants.EVENT.mousedown, (evt) => {
@@ -96,21 +110,7 @@
         onActivationClickCallback();
       }
     });
-  }
-
-  function didMove() {
-    const mapPin = window.elements.mapPin;
-    const overlay = window.elements.mapOverlay;
-
-    const mapPinRect = mapPin.getBoundingClientRect();
-    const overlayRect = overlay.getBoundingClientRect();
-    const leftPinPosition = Math.round((mapPinRect.width / 2) + mapPinRect.left - overlayRect.left);
-    const topPinPosition = Math.round(mapPinRect.top + mapPinRect.height - overlayRect.top);
-
-    if (onMoveCallback !== null) {
-      onMoveCallback(leftPinPosition, topPinPosition, window.constants.PIN_TIP_HEIGHT);
-    }
-  }
+  };
 
   const onActivationClick = (callback) => {
     onActivationClickCallback = callback;

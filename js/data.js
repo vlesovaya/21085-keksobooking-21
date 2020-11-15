@@ -1,7 +1,7 @@
 'use strict';
 
 (() => {
-  function keksRequest(onSuccess, onError) {
+  const keksRequest = (onSuccess, onError) => {
     let request = new XMLHttpRequest();
     request.timeout = window.constants.TIMEOUT;
 
@@ -39,7 +39,7 @@
     });
 
     return request;
-  }
+  };
 
   const load = (url, onSuccess, onError) => {
     let request = keksRequest(onSuccess, onError);

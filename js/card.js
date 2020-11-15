@@ -1,6 +1,10 @@
 'use strict';
 
 (() => {
+  const closeCard = (cardElement) => {
+    cardElement.classList.add(`hidden`);
+  };
+
   const createCard = () => {
     const cardElement = window.elements.card;
     const card = cardElement.cloneNode(true);
@@ -19,21 +23,17 @@
 
   const card = createCard();
 
-  function closeCard(cardElement) {
-    cardElement.classList.add(`hidden`);
-  }
-
   // Скрывает текстовые поля без данных
-  function verifyAndAddTextData(cardElement, selector, textData, dataMap) {
+  const verifyAndAddTextData = (cardElement, selector, textData, dataMap) => {
     if (textData !== null) {
       cardElement.querySelector(selector).textContent = dataMap;
     } else {
       cardElement.querySelector(selector).hidden = true;
     }
-  }
+  };
 
   // Скрывает фотографии без данных
-  function verifyAndAddPhotos(cardElement, photos) {
+  const verifyAndAddPhotos = (cardElement, photos) => {
     const popupPhotos = cardElement.querySelector(`.popup__photos`);
     if (photos === null || photos.length === 0) {
       popupPhotos.classList.add(`hidden`);
@@ -48,10 +48,10 @@
         popupPhotos.appendChild(newPhotoElement);
       }
     }
-  }
+  };
 
   // Обновляет данные в карточке
-  const updateCard = (cardData) => {
+  const update = (cardData) => {
     const fields = [
       {
         className: `.popup__title`,
@@ -101,21 +101,21 @@
     verifyAndAddPhotos(card, cardData.offer.photos);
   };
 
-  const openCard = () => {
+  const open = () => {
     card.classList.remove(`hidden`);
   };
 
-  const hideCard = () => {
+  const hide = () => {
     closeCard(card);
   };
 
   window.filters.addOnChangeFilterObserver(() => {
-    hideCard();
+    hide();
   });
 
   window.card = {
-    openCard,
-    updateCard,
-    hideCard,
+    open,
+    update,
+    hide,
   };
 })();

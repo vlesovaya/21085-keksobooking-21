@@ -1,8 +1,8 @@
 'use strict';
 
 (() => {
-  const dataUrl = `https://21.javascript.pages.academy/keksobooking/data`;
-  const postFormUrl = `https://21.javascript.pages.academy/keksobooking`;
+  const DATA_URL = `https://21.javascript.pages.academy/keksobooking/data`;
+  const POST_FORM_URL = `https://21.javascript.pages.academy/keksobooking`;
 
   const MAX_PINS_COUNT = 5;
   const PIN_TIP_HEIGHT = 15;
@@ -35,8 +35,8 @@
   const ANY = `any`;
 
   window.constants = {
-    dataUrl,
-    postFormUrl,
+    DATA_URL,
+    POST_FORM_URL,
     MAX_PINS_COUNT,
     PIN_TIP_HEIGHT,
     PIN_WIDTH,
